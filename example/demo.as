@@ -22,6 +22,8 @@ package
 
                 var b2:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xFFAAFF, 120, 160));
                 mainBalloon.append(b2);
+
+            mainBalloon.update();
         }
 
         private function getSprite(color:uint, width:Number, height:Number):Sprite

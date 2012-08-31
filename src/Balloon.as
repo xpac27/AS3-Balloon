@@ -5,12 +5,14 @@ package
         public function Balloon(algo:uint, subject:DisplayObjectContainer, main:Boolean = false):void
         {
             _algo = algo;
-
             _subject = subject;
-            _subject.addEventListener(Event.RESIZE, onSubjectResize);
-            _subject.addEventListener(Event.ADDED_TO_STAGE, onSubjectAddedToStage);
-
             _main = main;
+
+            if (_main)
+            {
+                _subject.addEventListener(Event.RESIZE, onSubjectResize);
+            }
+            _subject.addEventListener(Event.ADDED_TO_STAGE, onSubjectAddedToStage);
 
             if (_subject.parent)
             {
@@ -22,13 +24,11 @@ package
         {
             _balloons.push(balloon);
             _subject.addChild(balloon.subject);
-            update();
         }
         public function prepend(balloon:Balloon):void
         {
             _balloons.unshift(balloon);
             _subject.addChild(balloon.subject);
-            update();
         }
 
         private function onSubjectResize(event:Event):void
@@ -40,8 +40,13 @@ package
             update();
         }
 
-        private function update():void
+        public function update():void
         {
+            for each (var balloon:Balloon in _balloons)
+            {
+                balloon.update();
+            }
+
             switch (_algo)
             {
                 case 0x00:
@@ -60,52 +65,50 @@ package
 
         private function update_horizontal():void
         {
-            var x:uint = 0;
-            var y:uint = 0;
-            var height:uint = 0;
-            var balloon:Balloon;
+            if (_balloons.length > 0)
+            {
+                var balloon:Balloon;
+                var pH:uint = 0;
+                var x:uint = 0;
 
-            if (_main)
-            {
-                trace('stage');
-                height = _subject.stage.stageHeight;
-            }
-            else if (_subject.numChildren == 0)
-            {
-                trace('...');
-                height = _subject.parent.height;
-            }
-            else
-            {
-                height = _subject.height;
-            }
-            //else
-            //{
-                //for each (balloon in _balloons)
-                //{
-                    //height = balloon.subject.height > height ? balloon.subject.height : height;
-                //}
-                //_subject.height = height;
-            //}
-
-            for each (balloon in _balloons)
-            {
-                balloon.subject.x = x;
-                x += balloon.subject.width;
-
-                switch (balloon.alignement)
+                if (_main)
                 {
-                    case 0x00:
-                        balloon.subject.y = height / 2 - balloon.subject.height / 2;
-                        break;
+                    pH = _subject.stage.stageHeight;
+                }
+                else
+                {
+                    for each (balloon in _balloons)
+                    {
+                        balloon.subject.scaleY = 1;
+                        pH = balloon.subject.height > pH ? balloon.subject.height : pH;
+                    }
+                    _subject.height = pH;
+                }
 
-                    case 0x01:
-                        balloon.subject.y = 0;
-                        break;
+                for each (balloon in _balloons)
+                {
+                    balloon.subject.x = x;
+                    x += balloon.subject.width;
 
-                    case 0x02:
-                        balloon.subject.y = height - balloon.subject.height;
-                        break;
+                    switch (balloon.alignement)
+                    {
+                        case 0x00:
+                            balloon.subject.y = pH / 2 - balloon.subject.height / 2;
+                            break;
+
+                        case 0x01:
+                            balloon.subject.y = 0;
+                            break;
+
+                        case 0x02:
+                            balloon.subject.y = pH - balloon.subject.height;
+                            break;
+                    }
+
+                    if (!_main)
+                    {
+                        balloon.subject.scaleY = 1 / _subject.scaleY;
+                    }
                 }
             }
         }
