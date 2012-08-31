@@ -12,8 +12,8 @@ package
 
         private function onAddedToStage(event:Event):void
         {
-            //var scene:Scene = new Scene(stage, Style.VERTICAL);
-            var scene:Scene = new Scene(stage, Style.HORIZONTAL);
+            var scene:Scene = new Scene(stage, Style.VERTICAL);
+            //var scene:Scene = new Scene(stage, Style.HORIZONTAL);
 
             var l1:Leaf = new Leaf(getSprite(0xFFAAFF, 100, 100));
             scene.append(l1);
@@ -23,6 +23,9 @@ package
 
             var l2:Leaf = new Leaf(getSprite(0xFFFFAA, 40, 40));
             b1.append(l2);
+
+            var l3:Leaf = new Leaf(getSprite(0xAAFFAA, 40, 70));
+            b1.append(l3);
 
             scene.update();
         }

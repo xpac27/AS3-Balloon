@@ -15,73 +15,74 @@ package
             _timeout = setTimeout(update, 10);
         }
 
-        override protected function performe_update():void
+        override protected function update_horizontal():void
         {
-            trace('update Scene');
-
             var entity:Entity;
             var h:Number = 0;
             var w:Number = 0;
             var pos:Number = 0;
 
-            if (_alignement == 0x00)
+            for each (entity in _entities)
             {
-                for each (entity in _entities)
+                w += entity.width;
+            }
+            h = height;
+            pos = width / 2 - w / 2;
+
+            for each (entity in _entities)
+            {
+                entity.x = pos;
+                pos += entity.width;
+
+                switch (entity.alignement)
                 {
-                    w += entity.width;
-                }
-                h = height;
-                pos = width / 2 - w / 2;
+                    case 0x00:
+                        entity.y = h / 2 - entity.height / 2;
+                        break;
 
-                for each (entity in _entities)
-                {
-                    entity.x = pos;
-                    pos += entity.width;
+                    case 0x01:
+                        entity.y = 0;
+                        break;
 
-                    switch (entity.alignement)
-                    {
-                        case 0x00:
-                            entity.y = h / 2 - entity.height / 2;
-                            break;
-
-                        case 0x01:
-                            entity.y = 0;
-                            break;
-
-                        case 0x02:
-                            entity.y = h - entity.height;
-                            break;
-                    }
+                    case 0x02:
+                        entity.y = h - entity.height;
+                        break;
                 }
             }
-            else
+        }
+
+        override protected function update_vertical():void
+        {
+            var entity:Entity;
+            var h:Number = 0;
+            var w:Number = 0;
+            var pos:Number = 0;
+
+            for each (entity in _entities)
             {
-                for each (entity in _entities)
+                h += entity.height;
+            }
+            w = width;
+            pos = height / 2 - h / 2;
+
+            for each (entity in _entities)
+            {
+                entity.y = pos;
+                pos += entity.height;
+
+                switch (entity.alignement)
                 {
-                    h += entity.height;
-                }
-                w = width;
-                pos = height / 2 - h / 2;
+                    case 0x00:
+                        entity.x = w / 2 - entity.width / 2;
+                        break;
 
-                for each (entity in _entities)
-                {
-                    entity.y = pos;
-                    pos += entity.height;
+                    case 0x01:
+                        entity.x = 0;
+                        break;
 
-                    switch (entity.alignement)
-                    {
-                        case 0x00:
-                            entity.x = w / 2 - entity.width / 2;
-                            break;
-
-                        case 0x01:
-                            entity.x = 0;
-                            break;
-
-                        case 0x02:
-                            entity.x = h - entity.width;
-                            break;
-                    }
+                    case 0x02:
+                        entity.x = h - entity.width;
+                        break;
                 }
             }
         }
