@@ -76,7 +76,12 @@ package
 
                 if (_main)
                 {
+                    for each (balloon in _balloons)
+                    {
+                        tW += balloon.subject.width * balloon.subject.scaleX;
+                    }
                     pH = _subject.stage.stageHeight;
+                    x = pH / 2 - tW / 2;
                 }
                 else
                 {
