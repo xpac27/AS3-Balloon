@@ -32,31 +32,17 @@ package
                 {
                     entity.update();
                 }
-                switch (_alignement)
-                {
-                    case 0x00:
-                        update_horizontal();
-                        break;
-
-                    case 0x01:
-                        update_vertical();
-                        break;
-
-                    default:
-                        return;
-                        break;
-                }
+                beforeUpdate();
+                performeUpdate();
+                afterUpdate();
             }
         }
 
-        protected function update_horizontal():void
+        protected function beforeUpdate():void
         {
-            var entity:Entity;
             var h:Number = 0;
             var w:Number = 0;
-            var pos:Number = 0;
-
-            for each (entity in _entities)
+            for each (var entity:Entity in _entities)
             {
                 entity.scaleY = 1;
                 entity.scaleX = 1;
@@ -65,75 +51,72 @@ package
             }
             _subject.width = w = w > _subject.width ? w : _subject.width;
             _subject.height = h = h > _subject.height ? h : _subject.height;
+        }
 
-            for each (entity in _entities)
+        private function performeUpdate():void
+        {
+            var entity:Entity;
+            var pos:Number = _padding;
+
+            if (_alignement == 0x00)
             {
-                entity.x = pos;
-                pos += entity.width / _subject.scaleX;
-
-                switch (entity.alignement)
+                for each (entity in _entities)
                 {
-                    case 0x00:
-                        entity.y = h / 2 - entity.height / 2;
-                        break;
+                    entity.x = pos;
+                    pos += entity.width / _subject.scaleX;
 
-                    case 0x01:
-                        entity.y = 0;
-                        break;
+                    switch (entity.alignement)
+                    {
+                        case 0x00:
+                            entity.y = height / 2 - entity.height / 2;
+                            break;
 
-                    case 0x02:
-                        entity.y = h - entity.height;
-                        break;
+                        case 0x01:
+                            entity.y = 0;
+                            break;
+
+                        case 0x02:
+                            entity.y = height - entity.height;
+                            break;
+                    }
                 }
+            }
+            else if (_alignement == 0x01)
+            {
+                for each (entity in _entities)
+                {
+                    entity.y = pos;
+                    pos += entity.height;
 
-                entity.scaleY = 1 / _subject.scaleY;
-                entity.scaleX = 1 / _subject.scaleX;
+                    switch (entity.alignement)
+                    {
+                        case 0x00:
+                            entity.x = width / 2 - entity.width / 2;
+                            break;
+
+                        case 0x01:
+                            entity.x = 0;
+                            break;
+
+                        case 0x02:
+                            entity.x = width - entity.width;
+                            break;
+                    }
+                }
             }
         }
 
-        protected function update_vertical():void
+        protected function afterUpdate():void
         {
-            var entity:Entity;
-            var h:Number = 0;
-            var w:Number = 0;
-            var pos:Number = 0;
-
-            for each (entity in _entities)
+            for each (var entity:Entity in _entities)
             {
-                entity.scaleY = 1;
-                entity.scaleX = 1;
-                w  = entity.width > w ? entity.width : w;
-                h += entity.height;
-            }
-            _subject.width = w = w > _subject.width ? w : _subject.width;
-            _subject.height = h = h > _subject.height ? h : _subject.height;
-
-            for each (entity in _entities)
-            {
-                entity.y = pos;
-                pos += entity.height;
-
-                switch (entity.alignement)
-                {
-                    case 0x00:
-                        entity.x = w / 2 - entity.width / 2;
-                        break;
-
-                    case 0x01:
-                        entity.x = 0;
-                        break;
-
-                    case 0x02:
-                        entity.x = h - entity.width;
-                        break;
-                }
-
                 entity.scaleY = 1 / _subject.scaleY;
                 entity.scaleX = 1 / _subject.scaleX;
             }
         }
 
         protected var _entities:Array = [];
+        protected var _padding:Number = 0;
     }
 
     import flash.display.Sprite;

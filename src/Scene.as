@@ -15,76 +15,31 @@ package
             _timeout = setTimeout(update, 10);
         }
 
-        override protected function update_horizontal():void
+        override protected function beforeUpdate():void
         {
             var entity:Entity;
-            var h:Number = 0;
-            var w:Number = 0;
-            var pos:Number = 0;
+            var p:Number = 0;
 
-            for each (entity in _entities)
+            if (_alignement == 0x00)
             {
-                w += entity.width;
-            }
-            h = height;
-            pos = width / 2 - w / 2;
-
-            for each (entity in _entities)
-            {
-                entity.x = pos;
-                pos += entity.width;
-
-                switch (entity.alignement)
+                for each (entity in _entities)
                 {
-                    case 0x00:
-                        entity.y = h / 2 - entity.height / 2;
-                        break;
-
-                    case 0x01:
-                        entity.y = 0;
-                        break;
-
-                    case 0x02:
-                        entity.y = h - entity.height;
-                        break;
+                    p += entity.width;
                 }
+                _padding = width / 2 - p / 2;
+            }
+            else if (_alignement == 0x01)
+            {
+                for each (entity in _entities)
+                {
+                    p += entity.height;
+                }
+                _padding = height / 2 - p / 2;
             }
         }
 
-        override protected function update_vertical():void
+        override protected function afterUpdate():void
         {
-            var entity:Entity;
-            var h:Number = 0;
-            var w:Number = 0;
-            var pos:Number = 0;
-
-            for each (entity in _entities)
-            {
-                h += entity.height;
-            }
-            w = width;
-            pos = height / 2 - h / 2;
-
-            for each (entity in _entities)
-            {
-                entity.y = pos;
-                pos += entity.height;
-
-                switch (entity.alignement)
-                {
-                    case 0x00:
-                        entity.x = w / 2 - entity.width / 2;
-                        break;
-
-                    case 0x01:
-                        entity.x = 0;
-                        break;
-
-                    case 0x02:
-                        entity.x = h - entity.width;
-                        break;
-                }
-            }
         }
 
         override public function get width():Number  { return _subject.stage.stageWidth; }
