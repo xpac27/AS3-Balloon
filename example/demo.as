@@ -14,11 +14,14 @@ package
         {
             var mainBalloon:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, stage, true);
 
-                var b1:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xFFFFAA, 200, 100));
+                var b1:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0x999999, 200, 100));
                 mainBalloon.append(b1);
 
                     var b3:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xAAFFFF, 50, 50));
                     b1.append(b3);
+
+                    var b4:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xF9F9FF, 60, 90));
+                    b1.append(b4);
 
                 var b2:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xFFAAFF, 120, 160));
                 mainBalloon.append(b2);
@@ -32,6 +35,7 @@ package
             sprite.graphics.beginFill(color);
             sprite.graphics.drawRect(0, 0, width, height);
             sprite.graphics.endFill();
+            sprite.alpha = 0.75;
             return sprite;
         }
     }

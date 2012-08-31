@@ -63,13 +63,16 @@ package
             }
         }
 
+        public var expandHorizontal:Boolean = false;
+
         private function update_horizontal():void
         {
             if (_balloons.length > 0)
             {
                 var balloon:Balloon;
-                var pH:uint = 0;
-                var x:uint = 0;
+                var pH:Number = 0;
+                var tW:Number = 0;
+                var x:Number = 0;
 
                 if (_main)
                 {
@@ -80,15 +83,18 @@ package
                     for each (balloon in _balloons)
                     {
                         balloon.subject.scaleY = 1;
-                        pH = balloon.subject.height > pH ? balloon.subject.height : pH;
+                        balloon.subject.scaleX = 1;
+                        pH  = balloon.subject.height > pH ? balloon.subject.height : pH;
+                        tW += balloon.subject.width;
                     }
                     _subject.height = pH;
+                    _subject.width = tW;
                 }
 
                 for each (balloon in _balloons)
                 {
                     balloon.subject.x = x;
-                    x += balloon.subject.width;
+                    x += balloon.subject.width / _subject.scaleX;
 
                     switch (balloon.alignement)
                     {
@@ -108,6 +114,7 @@ package
                     if (!_main)
                     {
                         balloon.subject.scaleY = 1 / _subject.scaleY;
+                        balloon.subject.scaleX = 1 / _subject.scaleX;
                     }
                 }
             }
