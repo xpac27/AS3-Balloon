@@ -12,25 +12,24 @@ package
 
         private function onAddedToStage(event:Event):void
         {
-            var scene:Scene = new Scene(stage, Style.VERTICAL);
-            //var scene:Scene = new Scene(stage, Style.HORIZONTAL);
+            var scene:Scene = new Scene(stage, Entity.VERTICAL);
 
-            var l1:Leaf = new Leaf(getSprite(0xFFAAFF, 100, 100));
+            var l1:Entity = new Entity(getSprite(0xFFAAFF, 100, 100));
             scene.append(l1);
 
-            var b1:Balloon = new Balloon(Style.HORIZONTAL);
+            var b1:Balloon = new Balloon(Entity.HORIZONTAL);
             scene.append(b1);
 
-            var l2:Leaf = new Leaf(getSprite(0xFFFFAA, 40, 40));
+            var l2:Entity = new Entity(getSprite(0xFFFFAA, 40, 40));
             b1.append(l2);
 
-            var l3:Leaf = new Leaf(getSprite(0xAAFFAA, 40, 70));
+            var l3:Entity = new Entity(getSprite(0xAAFFAA, 40, 70));
             b1.append(l3);
 
-            var l4:Leaf = new Leaf(getSprite(0x999999, 40, 40), Style.BOTTOM);
+            var l4:Entity = new Entity(getSprite(0x999999, 40, 40), Entity.BOTTOM);
             b1.append(l4);
 
-            var l5:Leaf = new Leaf(getSprite(0x666666, 40, 40), Style.TOP);
+            var l5:Entity = new Entity(getSprite(0x666666, 40, 40), Entity.TOP);
             b1.append(l5);
 
             scene.update();
@@ -54,6 +53,5 @@ package
 
     import Balloon;
     import Scene;
-    import Leaf;
-    import Style;
+    import Entity;
 }

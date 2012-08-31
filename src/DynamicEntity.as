@@ -2,14 +2,14 @@ package
 {
     public class DynamicEntity extends Entity
     {
-        public function DynamicEntity(alignement:uint):void
+        public function DynamicEntity(subject:DisplayObjectContainer, alignement:uint = 0x00):void
         {
-            super(alignement);
+            super(subject, alignement);
         }
 
         public function append(entity:Entity):void
         {
-            if (entity.addTo(_subject))
+            if (entity.addTo(subject))
             {
                 _entities.push(entity);
             }
@@ -17,7 +17,7 @@ package
 
         public function prepend(entity:Entity):void
         {
-            if (entity.addTo(_subject))
+            if (entity.addTo(subject))
             {
                 _entities.unshift(entity);
             }
@@ -42,13 +42,13 @@ package
             var entity:Entity;
             var pos:Number;
 
-            if (_alignement == 0x00)
+            if (alignement == 0x00)
             {
                 pos = _paddingLeft;
                 for each (entity in _entities)
                 {
                     entity.x = pos;
-                    pos += entity.width / _subject.scaleX;
+                    pos += entity.width / subject.scaleX;
 
                     switch (entity.alignement)
                     {
@@ -66,7 +66,7 @@ package
                     }
                 }
             }
-            else if (_alignement == 0x01)
+            else if (alignement == 0x01)
             {
                 pos = _paddingTop;
                 for each (entity in _entities)
@@ -97,4 +97,6 @@ package
 
         protected var _entities:Array = [];
     }
+
+    import flash.display.DisplayObjectContainer;
 }

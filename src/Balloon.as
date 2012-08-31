@@ -2,10 +2,9 @@ package
 {
     public class Balloon extends DynamicEntity
     {
-        public function Balloon(alignement:uint):void
+        public function Balloon(alignement:uint = 0x00):void
         {
-            super(alignement);
-            _subject = new Sprite();
+            super(new Sprite(), alignement);
         }
 
         override protected function beforeUpdate():void
@@ -19,8 +18,8 @@ package
                 h  = entity.height > h ? entity.height : h;
                 w += entity.width;
             }
-            _subject.width = w = w > _subject.width ? w : _subject.width;
-            _subject.height = h = h > _subject.height ? h : _subject.height;
+            subject.width = w = w > subject.width ? w : subject.width;
+            subject.height = h = h > subject.height ? h : subject.height;
         }
 
 
@@ -28,8 +27,8 @@ package
         {
             for each (var entity:Entity in _entities)
             {
-                entity.scaleY = 1 / _subject.scaleY;
-                entity.scaleX = 1 / _subject.scaleX;
+                entity.scaleY = 1 / subject.scaleY;
+                entity.scaleX = 1 / subject.scaleX;
             }
         }
     }

@@ -2,11 +2,10 @@ package
 {
     public class Scene extends DynamicEntity
     {
-        public function Scene(subject:Stage, alignement:uint):void
+        public function Scene(subject:Stage, alignement:uint = 0x00):void
         {
-            super(alignement);
-            _subject = subject;
-            _subject.addEventListener(Event.RESIZE, onSubjectResize);
+            super(subject, alignement);
+            subject.addEventListener(Event.RESIZE, onSubjectResize);
         }
 
         private function onSubjectResize(event:Event):void
@@ -20,7 +19,7 @@ package
             var entity:Entity;
             var p:Number = 0;
 
-            if (_alignement == 0x00)
+            if (alignement == 0x00)
             {
                 for each (entity in _entities)
                 {
@@ -28,7 +27,7 @@ package
                 }
                 _paddingLeft = width / 2 - p / 2;
             }
-            else if (_alignement == 0x01)
+            else if (alignement == 0x01)
             {
                 for each (entity in _entities)
                 {
@@ -38,8 +37,8 @@ package
             }
         }
 
-        override public function get width():Number  { return _subject.stage.stageWidth; }
-        override public function get height():Number { return _subject.stage.stageHeight; }
+        override public function get width():Number  { return subject.stage.stageWidth; }
+        override public function get height():Number { return subject.stage.stageHeight; }
 
         private var _timeout:Number = 0;
     }
