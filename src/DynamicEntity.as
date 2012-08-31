@@ -7,7 +7,7 @@ package
             super(subject, alignement);
         }
 
-        public function append(entity:Entity):void
+        final public function append(entity:Entity):void
         {
             if (entity.addTo(subject))
             {
@@ -15,7 +15,7 @@ package
             }
         }
 
-        public function prepend(entity:Entity):void
+        final public function prepend(entity:Entity):void
         {
             if (entity.addTo(subject))
             {
@@ -23,7 +23,7 @@ package
             }
         }
 
-        override public function update():void
+        final override public function update():void
         {
             if (_entities.length > 0)
             {
@@ -37,14 +37,19 @@ package
             }
         }
 
-        private function performeUpdate():void
+        final private function performeUpdate():void
         {
             var entity:Entity;
-            var pos:Number;
+            var pos:Number = 0;
 
             if (alignement == 0x00)
             {
-                pos = _paddingLeft;
+                for each (entity in _entities)
+                {
+                    pos += entity.width;
+                }
+                pos = width / 2 - pos / 2;
+
                 for each (entity in _entities)
                 {
                     entity.x = pos;
@@ -68,11 +73,16 @@ package
             }
             else if (alignement == 0x01)
             {
-                pos = _paddingTop;
+                for each (entity in _entities)
+                {
+                    pos += entity.height;
+                }
+                pos = height / 2 - pos / 2;
+
                 for each (entity in _entities)
                 {
                     entity.y = pos;
-                    pos += entity.height;
+                    pos += entity.height / subject.scaleY;
 
                     switch (entity.alignement)
                     {

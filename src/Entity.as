@@ -9,7 +9,7 @@ package
         }
 
         // Meant to protect the _subject attribute
-        public function addTo(subject:DisplayObjectContainer):Boolean
+        final public function addTo(subject:DisplayObjectContainer):Boolean
         {
             if (_subject.parent)
             {
@@ -37,12 +37,6 @@ package
         public function get height():Number       { return _subject.height; }
         public function get alignement():uint     { return _alignement; }
         public function get subject():DisplayObjectContainer { return _subject; }
-
-        // Class accessors
-        protected var _paddingLeft:Number   = 0;
-        protected var _paddingTop:Number    = 0;
-        protected var _paddingRight:Number  = 0;
-        protected var _paddingBottom:Number = 0;
 
         // Read only properties
         private var _alignement:uint = 0x00;

@@ -14,29 +14,6 @@ package
             _timeout = setTimeout(update, 10);
         }
 
-        override protected function beforeUpdate():void
-        {
-            var entity:Entity;
-            var p:Number = 0;
-
-            if (alignement == 0x00)
-            {
-                for each (entity in _entities)
-                {
-                    p += entity.width;
-                }
-                _paddingLeft = width / 2 - p / 2;
-            }
-            else if (alignement == 0x01)
-            {
-                for each (entity in _entities)
-                {
-                    p += entity.height;
-                }
-                _paddingTop = height / 2 - p / 2;
-            }
-        }
-
         override public function get width():Number  { return subject.stage.stageWidth; }
         override public function get height():Number { return subject.stage.stageHeight; }
 
@@ -48,5 +25,4 @@ package
     import flash.utils.*;
 
     import Balloon;
-    import Style;
 }
