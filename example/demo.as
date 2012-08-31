@@ -12,21 +12,19 @@ package
 
         private function onAddedToStage(event:Event):void
         {
-            var mainBalloon:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, stage, true);
+            //var scene:Scene = new Scene(stage, Style.VERTICAL);
+            var scene:Scene = new Scene(stage, Style.HORIZONTAL);
 
-                var b1:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0x999999, 200, 100));
-                mainBalloon.append(b1);
+            var l1:Leaf = new Leaf(getSprite(0xFFAAFF, 100, 100));
+            scene.append(l1);
 
-                    var b3:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xAAFFFF, 50, 50));
-                    b1.append(b3);
+            var b1:Balloon = new Balloon(Style.HORIZONTAL);
+            scene.append(b1);
 
-                    var b4:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xF9F9FF, 60, 90));
-                    b1.append(b4);
+            var l2:Leaf = new Leaf(getSprite(0xFFFFAA, 40, 40));
+            b1.append(l2);
 
-                var b2:Balloon = new Balloon(Balloon.ALGO_HORIZONTAL, getSprite(0xFFAAFF, 120, 160));
-                mainBalloon.append(b2);
-
-            mainBalloon.update();
+            scene.update();
         }
 
         private function getSprite(color:uint, width:Number, height:Number):Sprite
@@ -45,5 +43,9 @@ package
     import flash.events.Event;
     import flash.display.Sprite;
 
+    import Entity;
     import Balloon;
+    import Scene;
+    import Leaf;
+    import Style;
 }
