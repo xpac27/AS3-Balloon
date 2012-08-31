@@ -10,14 +10,18 @@ package
 
         public function append(entity:Entity):void
         {
-            _entities.push(entity);
-            _subject.addChild(entity.subject);
+            if (entity.addTo(_subject))
+            {
+                _entities.push(entity);
+            }
         }
 
         public function prepend(entity:Entity):void
         {
-            _entities.unshift(entity);
-            _subject.addChild(entity.subject);
+            if (entity.addTo(_subject))
+            {
+                _entities.unshift(entity);
+            }
         }
 
         override public function update():void

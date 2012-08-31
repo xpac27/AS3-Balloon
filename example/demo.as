@@ -27,6 +27,12 @@ package
             var l3:Leaf = new Leaf(getSprite(0xAAFFAA, 40, 70));
             b1.append(l3);
 
+            var l4:Leaf = new Leaf(getSprite(0x999999, 40, 40), Style.BOTTOM);
+            b1.append(l4);
+
+            var l5:Leaf = new Leaf(getSprite(0x666666, 40, 40), Style.TOP);
+            b1.append(l5);
+
             scene.update();
         }
 
