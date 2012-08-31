@@ -2,10 +2,15 @@ package
 {
     public class Entity
     {
+        public function Entity(alignement:uint):void
+        {
+            _alignement = alignement;
+        }
+
         public function set scaleX(v:Number):void { _subject.scaleX = v; }
         public function set scaleY(v:Number):void { _subject.scaleY = v; }
-        public function set x(v:Number):void      { _subject.x = v; }
-        public function set y(v:Number):void      { _subject.y = v; }
+        public function set x(v:Number):void      { _subject.x = v - v % 1; }
+        public function set y(v:Number):void      { _subject.y = v - v % 1; }
 
         public function get scaleX():Number       { return _subject.scaleX; }
         public function get scaleY():Number       { return _subject.scaleY; }
@@ -27,7 +32,13 @@ package
         }
         public function update():void {}
 
+        protected var _paddingLeft:Number   = 0;
+        protected var _paddingTop:Number    = 0;
+        protected var _paddingRight:Number  = 0;
+        protected var _paddingBottom:Number = 0;
+
         protected var _alignement:uint = 0x00;
+
         protected var _subject:DisplayObjectContainer;
     }
 

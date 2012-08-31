@@ -1,6 +1,6 @@
 package
 {
-    public class Scene extends Balloon
+    public class Scene extends DynamicEntity
     {
         public function Scene(subject:Stage, alignement:uint):void
         {
@@ -26,7 +26,7 @@ package
                 {
                     p += entity.width;
                 }
-                _padding = width / 2 - p / 2;
+                _paddingLeft = width / 2 - p / 2;
             }
             else if (_alignement == 0x01)
             {
@@ -34,12 +34,8 @@ package
                 {
                     p += entity.height;
                 }
-                _padding = height / 2 - p / 2;
+                _paddingTop = height / 2 - p / 2;
             }
-        }
-
-        override protected function afterUpdate():void
-        {
         }
 
         override public function get width():Number  { return _subject.stage.stageWidth; }

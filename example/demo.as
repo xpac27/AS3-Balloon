@@ -52,7 +52,6 @@ package
     import flash.events.Event;
     import flash.display.Sprite;
 
-    import Entity;
     import Balloon;
     import Scene;
     import Leaf;

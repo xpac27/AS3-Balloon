@@ -4,7 +4,7 @@ package
     {
         public function Leaf(subject:DisplayObjectContainer, alignement:uint = 0x00):void
         {
-            _alignement = alignement;
+            super(alignement);
             _subject = subject;
         }
     }
