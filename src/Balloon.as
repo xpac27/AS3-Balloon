@@ -43,11 +43,6 @@ package
         {
             scaleX = 1;
             scaleY = 1;
-            for each (var entity:Entity in _entities)
-            {
-                entity.scaleY = 1 / scaleY;
-                entity.scaleX = 1 / scaleX;
-            }
         }
     }
 

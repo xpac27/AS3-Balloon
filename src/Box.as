@@ -18,13 +18,11 @@ package
 
             for each (var entity:Entity in _entities)
             {
-                entity.scaleY = 1;
-                entity.scaleX = 1;
                 h  = entity.height > h ? entity.height : h;
                 w += entity.width;
             }
-            subject.width = w = w > width ? w : width;
-            subject.height = h = h > height ? h : height;
+            width = w > width ? w : width;
+            height = h > height ? h : height;
         }
     }
 }
