@@ -2,7 +2,7 @@ package
 {
     public class Scene extends DynamicEntity
     {
-        public function Scene(subject:Stage, alignement:uint = 0x00):void
+        public function Scene(subject:Stage, alignement:uint):void
         {
             super(subject, alignement);
             subject.addEventListener(Event.RESIZE, onSubjectResize);

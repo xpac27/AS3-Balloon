@@ -2,7 +2,7 @@ package
 {
     public class DynamicEntity extends Entity
     {
-        public function DynamicEntity(subject:DisplayObjectContainer, alignement:uint = 0x00):void
+        public function DynamicEntity(subject:DisplayObjectContainer, alignement:uint):void
         {
             super(subject, alignement);
         }
@@ -40,63 +40,63 @@ package
         final private function performeUpdate():void
         {
             var entity:Entity;
-            var pos:Number = 0;
+            var pos_start:Number = 0;
+            var pos_middle:Number = 0;
+            var pos_end:Number = 0;
 
-            if (alignement == 0x00)
+            if (alignement & Entity.HORIZONTAL)
             {
                 for each (entity in _entities)
                 {
-                    pos += entity.width;
+                    pos_middle += entity.width;
                 }
-                pos = width / 2 - pos / 2;
+                pos_middle = width / 2 - pos_middle / 2;
+                pos_end = width;
 
                 for each (entity in _entities)
                 {
-                    entity.x = pos;
-                    pos += entity.width / subject.scaleX;
+                    // TODO CHECK TOP BOTTOM CENTER HERE
+                    entity.x = pos_middle;
+                    pos_middle += entity.width / subject.scaleX;
 
-                    switch (entity.alignement)
+                    if (entity.alignement & Entity.CENTER)
                     {
-                        case 0x00:
-                            entity.y = height / 2 - entity.height / 2;
-                            break;
-
-                        case 0x01:
-                            entity.y = 0;
-                            break;
-
-                        case 0x02:
-                            entity.y = height - entity.height;
-                            break;
+                        entity.y = height / 2 - entity.height / 2;
+                    }
+                    else if (entity.alignement & Entity.TOP)
+                    {
+                        entity.y = 0;
+                    }
+                    else if (entity.alignement & Entity.BOTTOM)
+                    {
+                        entity.y = height - entity.height;
                     }
                 }
             }
-            else if (alignement == 0x01)
+            else if (alignement & Entity.VERTICAL)
             {
                 for each (entity in _entities)
                 {
-                    pos += entity.height;
+                    pos_middle += entity.height;
                 }
-                pos = height / 2 - pos / 2;
+                pos_middle = height / 2 - pos_middle / 2;
 
                 for each (entity in _entities)
                 {
-                    entity.y = pos;
-                    pos += entity.height / subject.scaleY;
+                    entity.y = pos_middle;
+                    pos_middle += entity.height / subject.scaleY;
 
-                    switch (entity.alignement)
+                    if (entity.alignement & Entity.CENTER)
                     {
-                        case 0x00:
-                            entity.x = width / 2 - entity.width / 2;
-                            break;
-
-                        case 0x01:
-                            entity.x = 0;
-                            break;
-
-                        case 0x02:
-                            entity.x = width - entity.width;
-                            break;
+                        entity.x = width / 2 - entity.width / 2;
+                    }
+                    else if (entity.alignement & Entity.LEFT)
+                    {
+                        entity.x = 0;
+                    }
+                    else if (entity.alignement & Entity.RIGHT)
+                    {
+                        entity.x = width - entity.width;
                     }
                 }
             }

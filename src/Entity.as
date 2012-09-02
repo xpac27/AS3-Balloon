@@ -2,7 +2,7 @@ package
 {
     public class Entity
     {
-        public function Entity(subject:DisplayObjectContainer, alignement:uint = 0x00):void
+        public function Entity(subject:DisplayObjectContainer, alignement:uint):void
         {
             _subject = subject;
             _alignement = alignement;
@@ -39,17 +39,17 @@ package
         public function get subject():DisplayObjectContainer { return _subject; }
 
         // Read only properties
-        private var _alignement:uint = 0x00;
+        private var _alignement:uint = Entity.HORIZONTAL;
         private var _subject:DisplayObjectContainer;
 
         // Constants
-        public static const HORIZONTAL : uint = 0x00;
-        public static const VERTICAL   : uint = 0x01;
-        public static const CENTER     : uint = 0x00;
-        public static const TOP        : uint = 0x01;
-        public static const BOTTOM     : uint = 0x02;
-        public static const LEFT       : uint = 0x01;
-        public static const RIGHT      : uint = 0x02;
+        public static const HORIZONTAL : uint = 0x001;
+        public static const VERTICAL   : uint = 0x002;
+        public static const CENTER     : uint = 0x003;
+        public static const TOP        : uint = 0x010;
+        public static const BOTTOM     : uint = 0x020;
+        public static const LEFT       : uint = 0x030;
+        public static const RIGHT      : uint = 0x040;
     }
 
     import flash.display.DisplayObjectContainer;

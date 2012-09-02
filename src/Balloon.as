@@ -2,7 +2,7 @@ package
 {
     public class Balloon extends DynamicEntity
     {
-        public function Balloon(alignement:uint = 0x00, width:uint = 1, height:uint = 1, debug:Boolean = false):void
+        public function Balloon(width:uint, height:uint, alignement:uint, debug:Boolean = false):void
         {
             var sprite:Sprite = new Sprite();
             sprite.graphics.beginFill(0x000000, debug ? 0.1 : 0);
