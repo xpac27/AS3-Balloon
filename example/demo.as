@@ -14,22 +14,22 @@ package
         {
             var scene:Scene = new Scene(stage, Entity.VERTICAL);
 
-            var l1:Entity = new Entity(getSprite(0xFFAAFF, 100, 100), Entity.HORIZONTAL_CENTER | Entity.VERTICAL_CENTER);
+            var l1:Entity = new Entity(getSprite(0xFFAAFF, 100, 100));
             scene.append(l1);
 
-            var b1:Balloon = new Balloon(200, 200, Entity.HORIZONTAL_CENTER | Entity.VERTICAL_CENTER | Entity.HORIZONTAL, true);
+            var b1:Balloon = new Balloon(200, 200, Entity.HORIZONTAL, true);
             scene.append(b1);
 
                 // Yellow
-                var l2:Entity = new Entity(getSprite(0xFFFFAA, 40, 40), Entity.HORIZONTAL_CENTER | Entity.VERTICAL_CENTER);
+                var l2:Entity = new Entity(getSprite(0xFFFFAA, 40, 40));
                 b1.append(l2);
 
                 // Green
-                var l3:Entity = new Entity(getSprite(0xAAFFAA, 40, 70), Entity.HORIZONTAL_CENTER | Entity.VERTICAL_CENTER);
+                var l3:Entity = new Entity(getSprite(0xAAFFAA, 40, 70));
                 b1.append(l3);
 
                 // Grey
-                var l4:Entity = new Entity(getSprite(0x999999, 40, 40), Entity.HORIZONTAL_CENTER | Entity.BOTTOM);
+                var l4:Entity = new Entity(getSprite(0x999999, 40, 40), Entity.BOTTOM);
                 b1.append(l4);
 
                 // Grey
