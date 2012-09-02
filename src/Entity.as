@@ -23,7 +23,6 @@ package
             }
         }
 
-        // Meant to protect the _subject attribute
         final public function addTo(entity:Entity):Boolean
         {
             if (_subject.parent)
@@ -35,14 +34,16 @@ package
             return true;
         }
 
-        // Do nothing as Entity is static by default
-        public function update():void {}
+        // Do nothing, Entity is static by default
+        public function update():void
+        {
+        }
 
         // Writable properties
         public function set scaleX(v:Number):void { _subject.scaleX = v; }
         public function set scaleY(v:Number):void { _subject.scaleY = v; }
-        public function set width(v:Number):void  { _subject.width = v; }
-        public function set height(v:Number):void { _subject.height = v; }
+        public function set width(v:Number):void  { _subject.width = v - v % 1; }
+        public function set height(v:Number):void { _subject.height = v - v % 1; }
         public function set x(v:Number):void      { _subject.x = v - v % 1; }
         public function set y(v:Number):void      { _subject.y = v - v % 1; }
 

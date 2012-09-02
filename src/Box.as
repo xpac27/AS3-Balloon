@@ -4,8 +4,9 @@ package
     {
         public function Bax(width:uint, height:uint, alignement:uint):void
         {
+            // TODO test if we can remove this drawing
             var sprite:Sprite = new Sprite();
-            sprite.graphics.beginFill(0x000000, 0);
+            sprite.graphics.beginFill(0x000000, 0.1);
             sprite.graphics.drawRect(0, 0, width, height);
             sprite.graphics.endFill();
             super(sprite, alignement);
