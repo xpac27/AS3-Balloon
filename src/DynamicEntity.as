@@ -48,18 +48,34 @@ package
             {
                 for each (entity in _entities)
                 {
-                    pos_middle += entity.width;
+                    if (entity.alignement & Entity.HORIZONTAL_CENTER)
+                    {
+                        pos_middle += entity.width;
+                    }
                 }
                 pos_middle = width / 2 - pos_middle / 2;
                 pos_end = width;
+                pos_start = 0;
 
                 for each (entity in _entities)
                 {
-                    // TODO CHECK TOP BOTTOM CENTER HERE
-                    entity.x = pos_middle;
-                    pos_middle += entity.width / subject.scaleX;
+                    if (entity.alignement & Entity.HORIZONTAL_CENTER)
+                    {
+                        entity.x = pos_middle;
+                        pos_middle += entity.width / subject.scaleX;
+                    }
+                    else if (entity.alignement & Entity.LEFT)
+                    {
+                        entity.x = pos_start;
+                        pos_start += entity.width / subject.scaleX;
+                    }
+                    else if (entity.alignement & Entity.RIGHT)
+                    {
+                        pos_end -= entity.width / subject.scaleX;
+                        entity.x = pos_end;
+                    }
 
-                    if (entity.alignement & Entity.CENTER)
+                    if (entity.alignement & Entity.VERTICAL_CENTER)
                     {
                         entity.y = height / 2 - entity.height / 2;
                     }
@@ -77,16 +93,34 @@ package
             {
                 for each (entity in _entities)
                 {
-                    pos_middle += entity.height;
+                    if (entity.alignement & Entity.VERTICAL_CENTER)
+                    {
+                        pos_middle += entity.height;
+                    }
                 }
                 pos_middle = height / 2 - pos_middle / 2;
+                pos_end = height;
+                pos_start = 0;
 
                 for each (entity in _entities)
                 {
-                    entity.y = pos_middle;
-                    pos_middle += entity.height / subject.scaleY;
+                    if (entity.alignement & Entity.VERTICAL_CENTER)
+                    {
+                        entity.y = pos_middle;
+                        pos_middle += entity.height / subject.scaleY;
+                    }
+                    else if (entity.alignement & Entity.TOP)
+                    {
+                        entity.y = pos_start;
+                        pos_start += entity.height / subject.scaleY;
+                    }
+                    else if (entity.alignement & Entity.BOTTOM)
+                    {
+                        pos_end -= entity.height / subject.scaleY;
+                        entity.y = pos_end;
+                    }
 
-                    if (entity.alignement & Entity.CENTER)
+                    if (entity.alignement & Entity.HORIZONTAL_CENTER)
                     {
                         entity.x = width / 2 - entity.width / 2;
                     }

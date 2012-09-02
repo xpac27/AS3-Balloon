@@ -32,7 +32,7 @@ package
         public function get scaleX():Number       { return _subject.scaleX; }
         public function get scaleY():Number       { return _subject.scaleY; }
         public function get x():Number            { return _subject.x; }
-        public function get y():Number            { return _subject.x; }
+        public function get y():Number            { return _subject.y; }
         public function get width():Number        { return _subject.width; }
         public function get height():Number       { return _subject.height; }
         public function get alignement():uint     { return _alignement; }
@@ -43,13 +43,14 @@ package
         private var _subject:DisplayObjectContainer;
 
         // Constants
-        public static const HORIZONTAL : uint = 0x001;
-        public static const VERTICAL   : uint = 0x002;
-        public static const CENTER     : uint = 0x003;
-        public static const TOP        : uint = 0x010;
-        public static const BOTTOM     : uint = 0x020;
-        public static const LEFT       : uint = 0x030;
-        public static const RIGHT      : uint = 0x040;
+        public static const HORIZONTAL        : uint = 0x0001;
+        public static const VERTICAL          : uint = 0x0002;
+        public static const TOP               : uint = 0x0010;
+        public static const BOTTOM            : uint = 0x0020;
+        public static const LEFT              : uint = 0x0100;
+        public static const RIGHT             : uint = 0x0200;
+        public static const HORIZONTAL_CENTER : uint = 0x1000;
+        public static const VERTICAL_CENTER   : uint = 0x2000;
     }
 
     import flash.display.DisplayObjectContainer;
