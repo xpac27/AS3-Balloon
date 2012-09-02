@@ -9,7 +9,7 @@ package
 
         final public function append(entity:Entity):void
         {
-            if (entity.addTo(subject))
+            if (entity.addTo(this))
             {
                 _entities.push(entity);
             }
@@ -17,7 +17,7 @@ package
 
         final public function prepend(entity:Entity):void
         {
-            if (entity.addTo(subject))
+            if (entity.addTo(this))
             {
                 _entities.unshift(entity);
             }
@@ -62,16 +62,16 @@ package
                     if (entity.alignement & Entity.HCENTER)
                     {
                         entity.x = pos_middle;
-                        pos_middle += entity.width / subject.scaleX;
+                        pos_middle += entity.width;
                     }
                     else if (entity.alignement & Entity.LEFT)
                     {
                         entity.x = pos_start;
-                        pos_start += entity.width / subject.scaleX;
+                        pos_start += entity.width;
                     }
                     else if (entity.alignement & Entity.RIGHT)
                     {
-                        pos_end -= entity.width / subject.scaleX;
+                        pos_end -= entity.width;
                         entity.x = pos_end;
                     }
 
@@ -107,16 +107,16 @@ package
                     if (entity.alignement & Entity.VCENTER)
                     {
                         entity.y = pos_middle;
-                        pos_middle += entity.height / subject.scaleY;
+                        pos_middle += entity.height;
                     }
                     else if (entity.alignement & Entity.TOP)
                     {
                         entity.y = pos_start;
-                        pos_start += entity.height / subject.scaleY;
+                        pos_start += entity.height;
                     }
                     else if (entity.alignement & Entity.BOTTOM)
                     {
-                        pos_end -= entity.height / subject.scaleY;
+                        pos_end -= entity.height;
                         entity.y = pos_end;
                     }
 

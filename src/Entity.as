@@ -24,13 +24,14 @@ package
         }
 
         // Meant to protect the _subject attribute
-        final public function addTo(subject:DisplayObjectContainer):Boolean
+        final public function addTo(entity:Entity):Boolean
         {
             if (_subject.parent)
             {
                 return false;
             }
-            subject.addChild(_subject);
+            _parent = entity;
+            _parent.subject.addChild(_subject);
             return true;
         }
 
@@ -40,6 +41,8 @@ package
         // Writable properties
         public function set scaleX(v:Number):void { _subject.scaleX = v; }
         public function set scaleY(v:Number):void { _subject.scaleY = v; }
+        public function set width(v:Number):void  { _subject.width = v; }
+        public function set height(v:Number):void { _subject.height = v; }
         public function set x(v:Number):void      { _subject.x = v - v % 1; }
         public function set y(v:Number):void      { _subject.y = v - v % 1; }
 
@@ -51,11 +54,13 @@ package
         public function get width():Number        { return _subject.width; }
         public function get height():Number       { return _subject.height; }
         public function get alignement():uint     { return _alignement; }
+        public function get parent():Entity       { return _parent; }
         public function get subject():DisplayObjectContainer { return _subject; }
 
         // Read only properties
         private var _alignement:uint = Entity.HORIZONTAL;
         private var _subject:DisplayObjectContainer;
+        private var _parent:Entity;
 
         public static const HORIZONTAL : uint = 0x0001;
         public static const VERTICAL   : uint = 0x0002;

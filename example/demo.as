@@ -17,7 +17,7 @@ package
             var l1:Entity = new Entity(getSprite(0xFFAAFF, 100, 100));
             scene.append(l1);
 
-            var b1:Balloon = new Balloon(200, 200, Entity.HORIZONTAL, true);
+            var b1:Balloon = new Balloon(Entity.HORIZONTAL | Entity.FILL);
             scene.append(b1);
 
                 // Yellow
@@ -29,7 +29,7 @@ package
                 b1.append(l3);
 
                 // Grey
-                var l4:Entity = new Entity(getSprite(0x999999, 40, 40), Entity.BOTTOM);
+                var l4:Entity = new Entity(getSprite(0x999999, 40, 40), Entity.LEFT | Entity.BOTTOM);
                 b1.append(l4);
 
                 // Grey
