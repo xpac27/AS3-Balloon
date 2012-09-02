@@ -48,7 +48,7 @@ package
             {
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.HORIZONTAL_CENTER)
+                    if (entity.alignement & Entity.HCENTER)
                     {
                         pos_middle += entity.width;
                     }
@@ -59,7 +59,7 @@ package
 
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.HORIZONTAL_CENTER)
+                    if (entity.alignement & Entity.HCENTER)
                     {
                         entity.x = pos_middle;
                         pos_middle += entity.width / subject.scaleX;
@@ -75,7 +75,7 @@ package
                         entity.x = pos_end;
                     }
 
-                    if (entity.alignement & Entity.VERTICAL_CENTER)
+                    if (entity.alignement & Entity.VCENTER)
                     {
                         entity.y = height / 2 - entity.height / 2;
                     }
@@ -93,7 +93,7 @@ package
             {
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.VERTICAL_CENTER)
+                    if (entity.alignement & Entity.VCENTER)
                     {
                         pos_middle += entity.height;
                     }
@@ -104,7 +104,7 @@ package
 
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.VERTICAL_CENTER)
+                    if (entity.alignement & Entity.VCENTER)
                     {
                         entity.y = pos_middle;
                         pos_middle += entity.height / subject.scaleY;
@@ -120,7 +120,7 @@ package
                         entity.y = pos_end;
                     }
 
-                    if (entity.alignement & Entity.HORIZONTAL_CENTER)
+                    if (entity.alignement & Entity.HCENTER)
                     {
                         entity.x = width / 2 - entity.width / 2;
                     }

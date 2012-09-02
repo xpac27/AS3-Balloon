@@ -7,24 +7,19 @@ package
             _subject = subject;
             _alignement = alignement;
 
-            if ((_alignement & TOP) + (_alignement & BOTTOM) + (_alignement & VERTICAL_CENTER) == 0)
+            if ((_alignement & TOP) + (_alignement & BOTTOM) + (_alignement & VCENTER) == 0)
             {
-                trace('default 1');
-                _alignement = _alignement | VERTICAL_CENTER;
-            }
-            else
-            {
-                trace('ok 1');
+                _alignement = _alignement | VCENTER;
             }
 
-            if ((_alignement & LEFT) + (_alignement & RIGHT) + (_alignement & HORIZONTAL_CENTER) == 0)
+            if ((_alignement & LEFT) + (_alignement & RIGHT) + (_alignement & HCENTER) == 0)
             {
-                trace('default 2');
-                _alignement = _alignement | HORIZONTAL_CENTER;
+                _alignement = _alignement | HCENTER;
             }
-            else
+
+            if ((_alignement & FIT) + (_alignement & FILL) == 0)
             {
-                trace('ok 2');
+                _alignement = _alignement | FIT;
             }
         }
 
@@ -62,16 +57,19 @@ package
         private var _alignement:uint = Entity.HORIZONTAL;
         private var _subject:DisplayObjectContainer;
 
-        public static const HORIZONTAL        : uint = 0x001;
-        public static const VERTICAL          : uint = 0x002;
+        public static const HORIZONTAL : uint = 0x0001;
+        public static const VERTICAL   : uint = 0x0002;
 
-        public static const TOP               : uint = 0x010;
-        public static const BOTTOM            : uint = 0x020;
-        public static const VERTICAL_CENTER   : uint = 0x040;
+        public static const TOP        : uint = 0x0010;
+        public static const BOTTOM     : uint = 0x0020;
+        public static const VCENTER    : uint = 0x0040;
 
-        public static const LEFT              : uint = 0x100;
-        public static const RIGHT             : uint = 0x200;
-        public static const HORIZONTAL_CENTER : uint = 0x400;
+        public static const LEFT       : uint = 0x0100;
+        public static const RIGHT      : uint = 0x0200;
+        public static const HCENTER    : uint = 0x0400;
+
+        public static const FIT        : uint = 0x1000;
+        public static const FILL       : uint = 0x2000;
     }
 
     import flash.display.DisplayObjectContainer;
