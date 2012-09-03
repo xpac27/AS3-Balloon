@@ -46,17 +46,17 @@ package
             var fill_total:Number = 0;
             var fill_space:Number = 0;
 
-            if (alignement & Entity.HORIZONTAL)
+            if (horizontal())
             {
                 fill_space = parent.width;
 
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.FILL)
+                    if (entity.fill())
                     {
                         fill_total ++;
                     }
-                    else if (entity.alignement & Entity.FIT)
+                    else if (entity.fit())
                     {
                         fill_space -= entity.width;
                     }
@@ -65,7 +65,7 @@ package
                 var h:Number = 0;
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.FILL)
+                    if (entity.fill())
                     {
                         entity.width = fill_space / fill_total;
                     }
@@ -73,17 +73,17 @@ package
                 }
                 height = h > height ? h : height;
             }
-            else if (alignement & Entity.VERTICAL)
+            else if (vertical())
             {
                 fill_space = parent.height;
 
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.FILL)
+                    if (entity.fill())
                     {
                         fill_total ++;
                     }
-                    else if (entity.alignement & Entity.FIT)
+                    else if (entity.fit())
                     {
                         fill_space -= entity.height;
                     }
@@ -92,7 +92,7 @@ package
                 var w:Number = 0;
                 for each (entity in _entities)
                 {
-                    if (entity.alignement & Entity.FILL)
+                    if (entity.fill())
                     {
                         entity.height = fill_space / fill_total;
                     }
@@ -112,20 +112,20 @@ package
             var expanded:Boolean = false;
             for each (entity in _entities)
             {
-                if (entity.alignement & Entity.FILL)
+                if (entity.fill())
                 {
                     expanded = true;
                     break;
                 }
             }
 
-            if (alignement & Entity.HORIZONTAL)
+            if (horizontal())
             {
                 if (!expanded)
                 {
                     for each (entity in _entities)
                     {
-                        if (entity.alignement & Entity.HCENTER)
+                        if (entity.hcenter())
                         {
                             pos_middle += entity.width;
                         }
@@ -136,43 +136,43 @@ package
 
                 for each (entity in _entities)
                 {
-                    if (expanded || entity.alignement & Entity.LEFT)
+                    if (expanded || entity.left())
                     {
                         entity.x = pos_start;
                         pos_start += entity.width;
                     }
-                    else if (entity.alignement & Entity.HCENTER)
+                    else if (entity.hcenter())
                     {
                         entity.x = pos_middle;
                         pos_middle += entity.width;
                     }
-                    else if (entity.alignement & Entity.RIGHT)
+                    else if (entity.right())
                     {
                         pos_end -= entity.width;
                         entity.x = pos_end;
                     }
 
-                    if (entity.alignement & Entity.VCENTER)
+                    if (entity.vcenter())
                     {
                         entity.y = height / 2 - entity.height / 2;
                     }
-                    else if (entity.alignement & Entity.TOP)
+                    else if (entity.top())
                     {
                         entity.y = 0;
                     }
-                    else if (entity.alignement & Entity.BOTTOM)
+                    else if (entity.bottom())
                     {
                         entity.y = height - entity.height;
                     }
                 }
             }
-            else if (alignement & Entity.VERTICAL)
+            else if (vertical())
             {
                 if (!expanded)
                 {
                     for each (entity in _entities)
                     {
-                        if (entity.alignement & Entity.VCENTER)
+                        if (entity.vcenter())
                         {
                             pos_middle += entity.height;
                         }
@@ -183,31 +183,31 @@ package
 
                 for each (entity in _entities)
                 {
-                    if (expanded || entity.alignement & Entity.TOP)
+                    if (expanded || entity.top())
                     {
                         entity.y = pos_start;
                         pos_start += entity.height;
                     }
-                    else if (entity.alignement & Entity.VCENTER)
+                    else if (entity.vcenter())
                     {
                         entity.y = pos_middle;
                         pos_middle += entity.height;
                     }
-                    else if (entity.alignement & Entity.BOTTOM)
+                    else if (entity.bottom())
                     {
                         pos_end -= entity.height;
                         entity.y = pos_end;
                     }
 
-                    if (entity.alignement & Entity.HCENTER)
+                    if (entity.hcenter())
                     {
                         entity.x = width / 2 - entity.width / 2;
                     }
-                    else if (entity.alignement & Entity.LEFT)
+                    else if (entity.left())
                     {
                         entity.x = 0;
                     }
-                    else if (entity.alignement & Entity.RIGHT)
+                    else if (entity.right())
                     {
                         entity.x = width - entity.width;
                     }
