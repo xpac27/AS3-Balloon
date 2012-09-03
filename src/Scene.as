@@ -13,6 +13,11 @@ package
             update();
         }
 
+        override public function get parent():Entity { return this; }
+
+        override public function set width(v:Number):void  {}
+        override public function set height(v:Number):void {}
+
         override public function get width():Number  { return subject.stage.stageWidth; }
         override public function get height():Number { return subject.stage.stageHeight; }
     }
