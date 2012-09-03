@@ -67,7 +67,7 @@ package
                 {
                     if (entity.fill())
                     {
-                        entity.width = fill_space / fill_total;
+                        entity.width = Math.max(0, fill_space / fill_total);
                     }
                     h  = entity.height > h ? entity.height : h;
                 }
@@ -94,7 +94,7 @@ package
                 {
                     if (entity.fill())
                     {
-                        entity.height = fill_space / fill_total;
+                        entity.height = Math.max(0, fill_space / fill_total);
                     }
                     w  = entity.width > w ? entity.width : w;
                 }
