@@ -37,14 +37,14 @@ package
                 var e5:Entity = new Entity(getSprite(0x666666, 40, 40), Entity.FILL | Entity.BOTTOM);
                 b1.append(e5);
 
-            var b2:Box = new Box(200, 400, Entity.HORIZONTAL);
+            var b2:Box = new Box(200, 400, Entity.HORIZONTAL, true);
             scene.append(b2);
 
                 // White
                 var e6:Entity = new Entity(getSprite(0xFFFFFF, 40, 40), Entity.FILL);
                 b2.append(e6);
 
-                var b3:Box = new Box(50, 200, Entity.VERTICAL);
+                var b3:Box = new Box(50, 200, Entity.VERTICAL, true);
                 b2.append(b3);
 
 
