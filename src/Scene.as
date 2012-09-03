@@ -10,7 +10,8 @@ package
 
         private function onSubjectResize(event:Event):void
         {
-            update();
+            clearTimeout(_timeout);
+            setTimeout(update, 50);
         }
 
         override public function get parent():Entity { return this; }
@@ -20,10 +21,14 @@ package
 
         override public function get width():Number  { return subject.stage.stageWidth; }
         override public function get height():Number { return subject.stage.stageHeight; }
+
+        private var _timeout:Number;
     }
 
     import flash.display.Stage;
     import flash.events.Event;
+    import flash.utils.setTimeout;
+    import flash.utils.clearTimeout;
 
     import Balloon;
 }
