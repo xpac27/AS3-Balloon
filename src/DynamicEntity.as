@@ -62,13 +62,16 @@ package
                     }
                 }
 
+                var h:Number = 0;
                 for each (entity in _entities)
                 {
                     if (entity.alignement & Entity.FILL)
                     {
                         entity.width = fill_space / fill_total;
                     }
+                    h  = entity.height > h ? entity.height : h;
                 }
+                height = h > height ? h : height;
             }
             else if (alignement & Entity.VERTICAL)
             {
@@ -86,13 +89,16 @@ package
                     }
                 }
 
+                var w:Number = 0;
                 for each (entity in _entities)
                 {
                     if (entity.alignement & Entity.FILL)
                     {
                         entity.height = fill_space / fill_total;
                     }
+                    w  = entity.width > w ? entity.width : w;
                 }
+                width = w > width ? w : width;
             }
         }
 

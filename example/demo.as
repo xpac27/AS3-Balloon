@@ -37,6 +37,9 @@ package
                 var e5:Entity = new Entity(getSprite(0x666666, 40, 40), Entity.FILL | Entity.BOTTOM);
                 b1.append(e5);
 
+            var b2:Box = new Box(200, 400, Entity.HORIZONTAL);
+            scene.append(b2);
+
             scene.update();
         }
 

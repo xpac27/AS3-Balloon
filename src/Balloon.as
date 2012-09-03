@@ -20,5 +20,5 @@ package
 
     import flash.display.Sprite;
 
-    import Entity;
+    import DynamicEntity;
 }
