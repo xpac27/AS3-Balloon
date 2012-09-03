@@ -1,4 +1,4 @@
-package
+package com.xpac27.layout
 {
     public class DynamicEntity extends Entity
     {

@@ -1,4 +1,4 @@
-package
+package com.xpac27.layout
 {
     public class Scene extends DynamicEntity
     {
@@ -30,5 +30,5 @@ package
     import flash.utils.setTimeout;
     import flash.utils.clearTimeout;
 
-    import Balloon;
+    import com.xpac27.layout.Balloon;
 }

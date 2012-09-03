@@ -1,4 +1,4 @@
-package
+package com.xpac27.layout
 {
     public class Box extends DynamicEntity
     {
@@ -27,6 +27,6 @@ package
 
     import flash.display.Sprite;
 
-    import Entity;
-    import DynamicEntity;
+    import com.xpac27.layout.Entity;
+    import com.xpac27.layout.DynamicEntity;
 }

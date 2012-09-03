@@ -1,4 +1,4 @@
-package
+package com.xpac27.layout
 {
     public class Balloon extends DynamicEntity
     {
@@ -20,5 +20,5 @@ package
 
     import flash.display.Sprite;
 
-    import DynamicEntity;
+    import com.xpac27.layout.DynamicEntity;
 }

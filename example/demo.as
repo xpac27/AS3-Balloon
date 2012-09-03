@@ -67,7 +67,8 @@ package
     import flash.events.Event;
     import flash.display.Sprite;
 
-    import Balloon;
-    import Scene;
-    import Entity;
+    import com.xpac27.layout.Balloon;
+    import com.xpac27.layout.Scene;
+    import com.xpac27.layout.Entity;
+    import com.xpac27.layout.Box;
 }
