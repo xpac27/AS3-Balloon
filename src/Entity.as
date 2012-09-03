@@ -65,10 +65,6 @@ package
         public function fit():Boolean        { return 0 != (_alignement & FIT); }
         public function fill():Boolean       { return 0 != (_alignement & FILL); }
 
-        private var _alignement:uint = Entity.HORIZONTAL;
-        private var _subject:DisplayObjectContainer;
-        private var _parent:Entity;
-
         public static const HORIZONTAL : uint = 0x0001;
         public static const VERTICAL   : uint = 0x0002;
         public static const TOP        : uint = 0x0010;
@@ -79,6 +75,10 @@ package
         public static const HCENTER    : uint = 0x0400;
         public static const FIT        : uint = 0x1000;
         public static const FILL       : uint = 0x2000;
+
+        private var _alignement:uint = Entity.HORIZONTAL;
+        private var _subject:DisplayObjectContainer;
+        private var _parent:Entity;
     }
 
     import flash.display.DisplayObjectContainer;
