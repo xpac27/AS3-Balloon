@@ -37,33 +37,31 @@ package com.xpac27.layout
         // Do nothing, Entity is static by default
         public function update():void {}
 
-        public function set scaleX(v:Number):void { _subject.scaleX = v; }
-        public function set scaleY(v:Number):void { _subject.scaleY = v; }
         public function set width(v:Number):void  { _subject.width = v - v % 1; }
         public function set height(v:Number):void { _subject.height = v - v % 1; }
-        public function set x(v:Number):void      { _subject.x = v - v % 1; }
-        public function set y(v:Number):void      { _subject.y = v - v % 1; }
-
-        public function get scaleX():Number       { return _subject.scaleX; }
-        public function get scaleY():Number       { return _subject.scaleY; }
-        public function get x():Number            { return _subject.x; }
-        public function get y():Number            { return _subject.y; }
         public function get width():Number        { return _subject.width; }
         public function get height():Number       { return _subject.height; }
         public function get parent():Entity       { return _parent; }
 
-        public function get subject():DisplayObjectContainer { return _subject; }
-
-        public function horizontal():Boolean { return 0 != (_alignement & HORIZONTAL); }
-        public function vertical():Boolean   { return 0 != (_alignement & VERTICAL); }
-        public function top():Boolean        { return 0 != (_alignement & TOP); }
-        public function bottom():Boolean     { return 0 != (_alignement & BOTTOM); }
-        public function vcenter():Boolean    { return 0 != (_alignement & VCENTER); }
-        public function left():Boolean       { return 0 != (_alignement & LEFT); }
-        public function right():Boolean      { return 0 != (_alignement & RIGHT); }
-        public function hcenter():Boolean    { return 0 != (_alignement & HCENTER); }
-        public function fit():Boolean        { return 0 != (_alignement & FIT); }
-        public function fill():Boolean       { return 0 != (_alignement & FILL); }
+        final public function set scaleX(v:Number):void { _subject.scaleX = v; }
+        final public function set scaleY(v:Number):void { _subject.scaleY = v; }
+        final public function set x(v:Number):void      { _subject.x = v - v % 1; }
+        final public function set y(v:Number):void      { _subject.y = v - v % 1; }
+        final public function get scaleX():Number       { return _subject.scaleX; }
+        final public function get scaleY():Number       { return _subject.scaleY; }
+        final public function get x():Number            { return _subject.x; }
+        final public function get y():Number            { return _subject.y; }
+        final public function get subject():DisplayObjectContainer { return _subject; }
+        final public function horizontal():Boolean { return 0 != (_alignement & HORIZONTAL); }
+        final public function vertical():Boolean   { return 0 != (_alignement & VERTICAL); }
+        final public function top():Boolean        { return 0 != (_alignement & TOP); }
+        final public function bottom():Boolean     { return 0 != (_alignement & BOTTOM); }
+        final public function vcenter():Boolean    { return 0 != (_alignement & VCENTER); }
+        final public function left():Boolean       { return 0 != (_alignement & LEFT); }
+        final public function right():Boolean      { return 0 != (_alignement & RIGHT); }
+        final public function hcenter():Boolean    { return 0 != (_alignement & HCENTER); }
+        final public function fit():Boolean        { return 0 != (_alignement & FIT); }
+        final public function fill():Boolean       { return 0 != (_alignement & FILL); }
 
         public static const HORIZONTAL : uint = 0x0001;
         public static const VERTICAL   : uint = 0x0002;
