@@ -22,8 +22,7 @@ package com.xpac27.layout
 
         private function onSubjectResize(event:Event):void
         {
-            clearTimeout(_timeout);
-            setTimeout(update, 50);
+            update();
         }
 
         override public function addTo(entity:Entity):Boolean
@@ -38,14 +37,10 @@ package com.xpac27.layout
 
         override public function get width():Number  { return subject.stage.stageWidth; }
         override public function get height():Number { return subject.stage.stageHeight; }
-
-        private var _timeout:Number;
     }
 
     import flash.display.Stage;
     import flash.events.Event;
-    import flash.utils.setTimeout;
-    import flash.utils.clearTimeout;
     import flash.errors.IllegalOperationError;
 
     import com.xpac27.layout.Balloon;
