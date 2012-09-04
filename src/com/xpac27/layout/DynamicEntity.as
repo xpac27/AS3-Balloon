@@ -27,7 +27,7 @@ package com.xpac27.layout
 
         final override public function update():void
         {
-            if (_entities.length > 0)
+            if (_entities.length > 0 && parent)
             {
                 beforeUpdate();
                 performeUpdateTB();
