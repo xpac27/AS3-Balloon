@@ -4,14 +4,31 @@ package com.xpac27.layout
     {
         public function Scene(subject:Stage, alignement:uint):void
         {
-            super(subject, alignement);
-            subject.addEventListener(Event.RESIZE, onSubjectResize);
+            super(this, subject, alignement);
+
+            if (fill())
+            {
+                throw new ArgumentError('You cannot user FILL on a Scene, it will always fit the entier stage.');
+            }
+            else if (preserve())
+            {
+                throw new ArgumentError('You cannot user PRESERVE on a Scene because the stage could be resized to any aspect ratio.');
+            }
+            else
+            {
+                subject.addEventListener(Event.RESIZE, onSubjectResize);
+            }
         }
 
         private function onSubjectResize(event:Event):void
         {
             clearTimeout(_timeout);
             setTimeout(update, 50);
+        }
+
+        override public function addTo(entity:Entity):Boolean
+        {
+            throw new IllegalOperationError('Scene cannot be appended or prepended to anything.');
         }
 
         override public function get parent():Entity { return this; }
@@ -29,6 +46,7 @@ package com.xpac27.layout
     import flash.events.Event;
     import flash.utils.setTimeout;
     import flash.utils.clearTimeout;
+    import flash.errors.IllegalOperationError;
 
     import com.xpac27.layout.Balloon;
 }

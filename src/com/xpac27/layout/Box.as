@@ -8,11 +8,15 @@ package com.xpac27.layout
             sprite.graphics.beginFill(0x000000, debug ? 0.2 : 0);
             sprite.graphics.drawRect(0, 0, width, height);
             sprite.graphics.endFill();
-            super(sprite, alignement);
+            super(this, sprite, alignement);
 
             if (fill())
             {
-                throw new ArgumentError('Boxes must have a fixed size, you cannot user FILL on a Box.');
+                throw new ArgumentError('Boxes must have a fixed size, you cannot use FILL on a Box.');
+            }
+            else if (preserve())
+            {
+                throw new ArgumentError('You cannot user PRESERVE on a Box because its size is fixed.');
             }
         }
 

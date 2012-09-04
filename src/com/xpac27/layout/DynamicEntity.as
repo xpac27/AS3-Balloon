@@ -2,9 +2,14 @@ package com.xpac27.layout
 {
     public class DynamicEntity extends Entity
     {
-        public function DynamicEntity(subject:DisplayObjectContainer, alignement:uint):void
+        public function DynamicEntity(self:Entity, subject:DisplayObjectContainer, alignement:uint):void
         {
             super(subject, alignement);
+
+            if(self != this)
+            {
+                throw new IllegalOperationError('DynamicEntity cannot be instantiated directly.');
+            }
         }
 
         final public function append(entity:Entity):void
@@ -258,4 +263,5 @@ package com.xpac27.layout
     }
 
     import flash.display.DisplayObjectContainer;
+    import flash.errors.IllegalOperationError;
 }

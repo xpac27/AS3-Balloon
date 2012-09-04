@@ -28,7 +28,7 @@ package com.xpac27.layout
             }
         }
 
-        final public function addTo(entity:Entity):Boolean
+        public function addTo(entity:Entity):Boolean
         {
             if (_subject.parent)
             {

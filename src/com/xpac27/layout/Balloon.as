@@ -8,7 +8,12 @@ package com.xpac27.layout
             sprite.graphics.beginFill(0x000000, 0);
             sprite.graphics.drawRect(0, 0, 1, 1);
             sprite.graphics.endFill();
-            super(sprite, alignement);
+            super(this, sprite, alignement);
+
+            if (preserve())
+            {
+                throw new ArgumentError('You cannot user PRESERVE on a Balloon because it has no original size, it\'s extensible.');
+            }
         }
 
         override protected function afterUpdate():void
