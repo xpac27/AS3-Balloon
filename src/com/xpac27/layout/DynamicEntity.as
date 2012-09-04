@@ -45,6 +45,8 @@ package com.xpac27.layout
             var entity:Entity;
             var fill_total:Number = 0;
             var fill_space:Number = 0;
+            var entity_aspect_ratio:Number = 0;
+            var parent_aspect_ratio:Number = parent.width / parent.height;
 
             if (horizontal())
             {
@@ -67,9 +69,26 @@ package com.xpac27.layout
                 {
                     if (entity.fill())
                     {
-                        entity.width = Math.max(0, fill_space / fill_total);
+                        if (entity.neglect())
+                        {
+                            entity.width = Math.max(0, fill_space / fill_total);
+                        }
+                        else if (entity.preserve())
+                        {
+                            entity_aspect_ratio = entity.width / entity.height;
+                            if (entity_aspect_ratio > parent_aspect_ratio)
+                            {
+                                entity.width = Math.max(0, fill_space / fill_total);
+                                entity.height = entity.width / entity_aspect_ratio;
+                            }
+                            else
+                            {
+                                entity.height = parent.height;
+                                entity.width = entity.height * entity_aspect_ratio;
+                            }
+                        }
                     }
-                    h  = entity.height > h ? entity.height : h;
+                    h = entity.height > h ? entity.height : h;
                 }
                 height = h > height ? h : height;
             }
@@ -94,9 +113,26 @@ package com.xpac27.layout
                 {
                     if (entity.fill())
                     {
-                        entity.height = Math.max(0, fill_space / fill_total);
+                        if (entity.neglect())
+                        {
+                            entity.height = Math.max(0, fill_space / fill_total);
+                        }
+                        else if (entity.preserve())
+                        {
+                            entity_aspect_ratio = entity.width / entity.height;
+                            if (entity_aspect_ratio > parent_aspect_ratio)
+                            {
+                                entity.height = Math.max(0, fill_space / fill_total);
+                                entity.width = entity.height * entity_aspect_ratio;
+                            }
+                            else
+                            {
+                                entity.width = parent.width;
+                                entity.height = entity.width / entity_aspect_ratio;
+                            }
+                        }
                     }
-                    w  = entity.width > w ? entity.width : w;
+                    w = entity.width > w ? entity.width : w;
                 }
                 width = w > width ? w : width;
             }
@@ -112,7 +148,7 @@ package com.xpac27.layout
             var expanded:Boolean = false;
             for each (entity in _entities)
             {
-                if (entity.fill())
+                if (entity.fill() && entity.preserve())
                 {
                     expanded = true;
                     break;

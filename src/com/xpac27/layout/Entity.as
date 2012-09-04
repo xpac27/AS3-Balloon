@@ -21,6 +21,11 @@ package com.xpac27.layout
             {
                 _alignement = _alignement | FIT;
             }
+
+            if ((_alignement & NEGLECT) + (_alignement & PRESERVE) == 0)
+            {
+                _alignement = _alignement | NEGLECT;
+            }
         }
 
         final public function addTo(entity:Entity):Boolean
@@ -34,7 +39,6 @@ package com.xpac27.layout
             return true;
         }
 
-        // Do nothing, Entity is static by default
         public function update():void {}
 
         public function set width(v:Number):void  { _subject.width = v - v % 1; }
@@ -62,17 +66,21 @@ package com.xpac27.layout
         final public function hcenter():Boolean    { return 0 != (_alignement & HCENTER); }
         final public function fit():Boolean        { return 0 != (_alignement & FIT); }
         final public function fill():Boolean       { return 0 != (_alignement & FILL); }
+        final public function neglect():Boolean    { return 0 != (_alignement & NEGLECT); }
+        final public function preserve():Boolean   { return 0 != (_alignement & PRESERVE); }
 
-        public static const HORIZONTAL : uint = 0x0001;
-        public static const VERTICAL   : uint = 0x0002;
-        public static const TOP        : uint = 0x0010;
-        public static const BOTTOM     : uint = 0x0020;
-        public static const VCENTER    : uint = 0x0040;
-        public static const LEFT       : uint = 0x0100;
-        public static const RIGHT      : uint = 0x0200;
-        public static const HCENTER    : uint = 0x0400;
-        public static const FIT        : uint = 0x1000;
-        public static const FILL       : uint = 0x2000;
+        public static const HORIZONTAL : uint = 0x00001;
+        public static const VERTICAL   : uint = 0x00002;
+        public static const TOP        : uint = 0x00010;
+        public static const BOTTOM     : uint = 0x00020;
+        public static const VCENTER    : uint = 0x00040;
+        public static const LEFT       : uint = 0x00100;
+        public static const RIGHT      : uint = 0x00200;
+        public static const HCENTER    : uint = 0x00400;
+        public static const FIT        : uint = 0x01000;
+        public static const FILL       : uint = 0x02000;
+        public static const NEGLECT    : uint = 0x10000;
+        public static const PRESERVE   : uint = 0x20000;
 
         private var _alignement:uint = Entity.HORIZONTAL;
         private var _subject:DisplayObjectContainer;
