@@ -51,7 +51,7 @@ package com.xpac27.layout
             var fill_total:Number = 0;
             var fill_space:Number = 0;
             var entity_aspect_ratio:Number = 0;
-            var parent_aspect_ratio:Number = parent.width / parent.height;
+            var parent_aspect_ratio:Number = parent.aspectRatio;
 
             if (horizontal())
             {
@@ -80,7 +80,7 @@ package com.xpac27.layout
                         }
                         else if (entity.preserve())
                         {
-                            entity_aspect_ratio = entity.width / entity.height;
+                            entity_aspect_ratio = entity.aspectRatio;
                             if (entity_aspect_ratio > parent_aspect_ratio)
                             {
                                 entity.width = Math.max(0, fill_space / fill_total);
