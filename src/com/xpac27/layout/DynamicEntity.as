@@ -17,7 +17,7 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.push(entity);
-                update();
+                updateAll();
             }
         }
 
@@ -26,7 +26,7 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.unshift(entity);
-                update();
+                updateAll();
             }
         }
 

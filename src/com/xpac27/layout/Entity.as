@@ -39,6 +39,11 @@ package com.xpac27.layout
             return true;
         }
 
+        public function updateAll():void
+        {
+            _subject.dispatchEvent(new Event(Event.RESIZE, true));
+        }
+
         public function update():void {}
 
         public function set width(v:Number):void  { _subject.width = v - v % 1; }
@@ -55,7 +60,7 @@ package com.xpac27.layout
         final public function get scaleY():Number       { return _subject.scaleY; }
         final public function get x():Number            { return _subject.x; }
         final public function get y():Number            { return _subject.y; }
-        final public function get aspectRatio():Number  { return _subject.width / _subject.height; }
+        final public function get aspectRatio():Number  { trace(_subject.width + ' / ' + _subject.height); return _subject.width / _subject.height; }
         final public function get subject():DisplayObjectContainer { return _subject; }
         final public function horizontal():Boolean { return 0 != (_alignement & HORIZONTAL); }
         final public function vertical():Boolean   { return 0 != (_alignement & VERTICAL); }
@@ -89,4 +94,5 @@ package com.xpac27.layout
     }
 
     import flash.display.DisplayObjectContainer;
+    import flash.events.Event;
 }
