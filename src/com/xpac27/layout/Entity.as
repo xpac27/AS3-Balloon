@@ -60,6 +60,7 @@ package com.xpac27.layout
         final public function get scaleY():Number       { return _subject.scaleY; }
         final public function get x():Number            { return _subject.x; }
         final public function get y():Number            { return _subject.y; }
+        final public function get type():String         { return _type; }
         final public function get aspectRatio():Number  { return width / height; }
         final public function get subject():DisplayObjectContainer { return _subject; }
         final public function horizontal():Boolean { return 0 != (_alignement & HORIZONTAL); }
@@ -91,6 +92,8 @@ package com.xpac27.layout
         private var _alignement:uint = Entity.HORIZONTAL;
         private var _subject:DisplayObjectContainer;
         private var _parent:Entity;
+
+        protected var _type:String = 'Entity';
     }
 
     import flash.display.DisplayObjectContainer;

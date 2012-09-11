@@ -14,7 +14,12 @@ package com.xpac27.layout
             {
                 throw new ArgumentError('You cannot user PRESERVE on a Balloon because it has no original size, it\'s extensible.');
             }
+
+            _type = 'Balloon';
         }
+
+        override public function get width():Number  { return super.width / scaleX; }
+        override public function get height():Number { return super.height / scaleY; }
 
         override protected function afterUpdate():void
         {

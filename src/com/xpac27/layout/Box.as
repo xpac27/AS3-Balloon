@@ -18,6 +18,8 @@ package com.xpac27.layout
             {
                 throw new ArgumentError('You cannot user PRESERVE on a Box because its size is fixed.');
             }
+
+            _type = 'Box';
         }
 
         override public function get parent():Entity { return this; }

@@ -10,6 +10,8 @@ package com.xpac27.layout
             {
                 throw new IllegalOperationError('DynamicEntity cannot be instantiated directly.');
             }
+
+            _type = 'DynamicEntity';
         }
 
         final public function append(entity:Entity):void

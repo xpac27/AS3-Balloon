@@ -18,6 +18,8 @@ package com.xpac27.layout
             {
                 subject.addEventListener(Event.RESIZE, onSubjectResize);
             }
+
+            _type = 'Scene';
         }
 
         private function onSubjectResize(event:Event):void
