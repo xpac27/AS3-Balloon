@@ -36,7 +36,6 @@ package com.xpac27.layout
         {
             if (_entities.length > 0 && parent)
             {
-                trace('... updating ' + type);
                 beforeUpdate();
                 performeUpdateTB();
                 for each (var entity:Entity in _entities)

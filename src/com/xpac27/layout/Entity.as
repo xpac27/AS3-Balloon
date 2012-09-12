@@ -40,7 +40,6 @@ package com.xpac27.layout
             {
                 return false;
             }
-            trace('... adding ' + type + ' to ' + entity.type);
             _parent = entity;
             _parent.subject.addChild(_subject);
             return true;
