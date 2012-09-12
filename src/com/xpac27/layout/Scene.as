@@ -4,7 +4,7 @@ package com.xpac27.layout
     {
         public function Scene(subject:Stage, alignement:uint):void
         {
-            super(this, subject, alignement);
+            super(this, subject, alignement, [0, 0, 0, 0]);
 
             if (fill())
             {

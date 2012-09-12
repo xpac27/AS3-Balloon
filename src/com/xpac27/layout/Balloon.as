@@ -2,13 +2,14 @@ package com.xpac27.layout
 {
     public class Balloon extends DynamicEntity
     {
-        public function Balloon(alignement:uint):void
+        public function Balloon(alignement:uint, margins:Array = null):void
         {
             var sprite:Sprite = new Sprite();
             sprite.graphics.beginFill(0x000000, 0);
             sprite.graphics.drawRect(0, 0, 1, 1);
             sprite.graphics.endFill();
-            super(this, sprite, alignement);
+
+            super(this, sprite, alignement, margins);
 
             if (preserve())
             {

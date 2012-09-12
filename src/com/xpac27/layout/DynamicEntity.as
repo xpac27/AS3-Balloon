@@ -2,9 +2,9 @@ package com.xpac27.layout
 {
     public class DynamicEntity extends Entity
     {
-        public function DynamicEntity(self:Entity, subject:DisplayObjectContainer, alignement:uint):void
+        public function DynamicEntity(self:Entity, subject:DisplayObjectContainer, alignement:uint, margins:Array):void
         {
-            super(subject, alignement);
+            super(subject, alignement, margins);
 
             if(self != this)
             {
@@ -36,6 +36,7 @@ package com.xpac27.layout
         {
             if (_entities.length > 0 && parent)
             {
+                trace('... updating ' + type);
                 beforeUpdate();
                 performeUpdateTB();
                 for each (var entity:Entity in _entities)
@@ -67,7 +68,7 @@ package com.xpac27.layout
                     }
                     else if (entity.fit())
                     {
-                        fill_space -= entity.width;
+                        fill_space -= entity.totalWidth;
                     }
                 }
 
@@ -78,8 +79,9 @@ package com.xpac27.layout
                     {
                         if (entity.neglect())
                         {
-                            entity.width = Math.max(0, fill_space / fill_total);
+                            entity.width = Math.max(0, fill_space / fill_total - entity.marginLeft - entity.marginRight);
                         }
+                        // Do not handle margins because it's too complex
                         else if (entity.preserve())
                         {
                             entity_aspect_ratio = entity.aspectRatio;
@@ -95,7 +97,7 @@ package com.xpac27.layout
                             }
                         }
                     }
-                    h = entity.height > h ? entity.height : h;
+                    h = entity.totalHeight > h ? entity.totalHeight : h;
                 }
                 height = h > height ? h : height;
             }
@@ -111,7 +113,7 @@ package com.xpac27.layout
                     }
                     else if (entity.fit())
                     {
-                        fill_space -= entity.height;
+                        fill_space -= entity.totalHeight;
                     }
                 }
 
@@ -122,7 +124,7 @@ package com.xpac27.layout
                     {
                         if (entity.neglect())
                         {
-                            entity.height = Math.max(0, fill_space / fill_total);
+                            entity.height = Math.max(0, fill_space / fill_total - entity.marginTop - entity.marginBottom);
                         }
                         else if (entity.preserve())
                         {
@@ -139,7 +141,7 @@ package com.xpac27.layout
                             }
                         }
                     }
-                    w = entity.width > w ? entity.width : w;
+                    w = entity.totalWidth > w ? entity.totalWidth : w;
                 }
                 width = w > width ? w : width;
             }
@@ -170,7 +172,7 @@ package com.xpac27.layout
                     {
                         if (entity.hcenter())
                         {
-                            pos_middle += entity.width;
+                            pos_middle += entity.totalWidth;
                         }
                     }
                     pos_middle = width / 2 - pos_middle / 2;
@@ -181,31 +183,31 @@ package com.xpac27.layout
                 {
                     if (expanded || entity.left())
                     {
-                        entity.x = pos_start;
-                        pos_start += entity.width;
+                        entity.x = pos_start + entity.marginLeft;
+                        pos_start += entity.totalWidth;
                     }
                     else if (entity.hcenter())
                     {
-                        entity.x = pos_middle;
-                        pos_middle += entity.width;
+                        entity.x = pos_middle + entity.marginLeft;
+                        pos_middle += entity.totalWidth;
                     }
                     else if (entity.right())
                     {
-                        pos_end -= entity.width;
-                        entity.x = pos_end;
+                        pos_end -= entity.totalWidth;
+                        entity.x = pos_end + entity.marginLeft;
                     }
 
                     if (entity.vcenter())
                     {
-                        entity.y = height / 2 - entity.height / 2;
+                        entity.y = height / 2 - entity.height / 2 - entity.marginBottom + entity.marginTop;
                     }
                     else if (entity.top())
                     {
-                        entity.y = 0;
+                        entity.y = entity.marginTop;
                     }
                     else if (entity.bottom())
                     {
-                        entity.y = height - entity.height;
+                        entity.y = height - entity.height - entity.marginBottom;
                     }
                 }
             }
@@ -217,7 +219,7 @@ package com.xpac27.layout
                     {
                         if (entity.vcenter())
                         {
-                            pos_middle += entity.height;
+                            pos_middle += entity.totalHeight;
                         }
                     }
                     pos_middle = height / 2 - pos_middle / 2;
@@ -228,31 +230,31 @@ package com.xpac27.layout
                 {
                     if (expanded || entity.top())
                     {
-                        entity.y = pos_start;
-                        pos_start += entity.height;
+                        entity.y = pos_start + entity.marginTop;
+                        pos_start += entity.totalHeight;
                     }
                     else if (entity.vcenter())
                     {
-                        entity.y = pos_middle;
-                        pos_middle += entity.height;
+                        entity.y = pos_middle + entity.marginTop;
+                        pos_middle += entity.totalHeight;
                     }
                     else if (entity.bottom())
                     {
-                        pos_end -= entity.height;
-                        entity.y = pos_end;
+                        pos_end -= entity.totalHeight;
+                        entity.y = pos_end + entity.marginTop;
                     }
 
                     if (entity.hcenter())
                     {
-                        entity.x = width / 2 - entity.width / 2;
+                        entity.x = width / 2 - entity.width / 2 - entity.marginRight + entity.marginLeft;
                     }
                     else if (entity.left())
                     {
-                        entity.x = 0;
+                        entity.x = entity.marginLeft;
                     }
                     else if (entity.right())
                     {
-                        entity.x = width - entity.width;
+                        entity.x = width - entity.width - entity.marginRight;
                     }
                 }
             }
