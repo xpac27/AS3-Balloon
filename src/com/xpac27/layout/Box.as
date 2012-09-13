@@ -2,7 +2,7 @@ package com.xpac27.layout
 {
     public class Box extends DynamicEntity
     {
-        public function Box(subject:DisplayObjectContainer, alignement:uint, margins:Array = null):void
+        public function Box(subject:DisplayObjectContainer, alignement:uint = 0x00, margins:Array = null):void
         {
             super(this, subject, alignement, margins);
 

@@ -8,6 +8,11 @@ package com.xpac27.layout
             _alignement = alignement;
             _margins = (margins ||= [0, 0, 0, 0]);
 
+            checkAlignement();
+        }
+
+        private function checkAlignement():void
+        {
             if ((_alignement & HORIZONTAL) + (_alignement & VERTICAL) == 0)
             {
                 _alignement = _alignement | HORIZONTAL;
@@ -71,6 +76,7 @@ package com.xpac27.layout
         final public function set marginRight(v:Number):void  { _margins[1] = v; }
         final public function set marginBottom(v:Number):void { _margins[2] = v; }
         final public function set marginLeft(v:Number):void   { _margins[3] = v; }
+        final public function set alignement(v:uint):void     { _alignement = v; checkAlignement(); }
 
         // GETTER
         final public function get scaleX():Number       { return _subject.scaleX; }

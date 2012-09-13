@@ -2,7 +2,7 @@ package com.xpac27.layout
 {
     public class Balloon extends DynamicEntity
     {
-        public function Balloon(alignement:uint, margins:Array = null):void
+        public function Balloon(alignement:uint = 0x00, margins:Array = null):void
         {
             var sprite:Sprite = new Sprite();
             sprite.graphics.beginFill(0x000000, 0);
