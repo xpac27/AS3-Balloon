@@ -61,13 +61,16 @@ package com.xpac27.layout
 
                 for each (entity in _entities)
                 {
-                    if (entity.fill())
+                    if (entity.relative())
                     {
-                        fill_total ++;
-                    }
-                    else if (entity.fit())
-                    {
-                        fill_space -= entity.totalWidth;
+                        if (entity.fill())
+                        {
+                            fill_total ++;
+                        }
+                        else if (entity.fit())
+                        {
+                            fill_space -= entity.totalWidth;
+                        }
                     }
                 }
 
@@ -169,7 +172,7 @@ package com.xpac27.layout
                 {
                     for each (entity in _entities)
                     {
-                        if (entity.hcenter())
+                        if (entity.hcenter() && entity.relative())
                         {
                             pos_middle += entity.totalWidth;
                         }
@@ -180,20 +183,41 @@ package com.xpac27.layout
 
                 for each (entity in _entities)
                 {
-                    if (expanded || entity.left())
+                    if (entity.left())
                     {
-                        entity.x = pos_start + entity.marginLeft;
-                        pos_start += entity.totalWidth;
+                        if (entity.relative())
+                        {
+                            entity.x = pos_start + entity.marginLeft;
+                            pos_start += entity.totalWidth;
+                        }
+                        else if (entity.absolute())
+                        {
+                            entity.x = entity.marginLeft;
+                        }
                     }
                     else if (entity.hcenter())
                     {
-                        entity.x = pos_middle + entity.marginLeft;
-                        pos_middle += entity.totalWidth;
+                        if (entity.relative())
+                        {
+                            entity.x = pos_middle + entity.marginLeft - entity.marginRight;
+                            pos_middle += entity.totalWidth;
+                        }
+                        else if (entity.absolute())
+                        {
+                            entity.x = width / 2 - entity.width / 2 + entity.marginLeft - entity.marginRight;
+                        }
                     }
                     else if (entity.right())
                     {
-                        pos_end -= entity.totalWidth;
-                        entity.x = pos_end + entity.marginLeft;
+                        if (entity.relative())
+                        {
+                            pos_end -= entity.totalWidth;
+                            entity.x = pos_end + entity.marginLeft;
+                        }
+                        else if (entity.absolute())
+                        {
+                            entity.x = width - entity.width - entity.marginRight;
+                        }
                     }
 
                     if (entity.vcenter())
@@ -216,7 +240,7 @@ package com.xpac27.layout
                 {
                     for each (entity in _entities)
                     {
-                        if (entity.vcenter())
+                        if (entity.vcenter() && entity.relative())
                         {
                             pos_middle += entity.totalHeight;
                         }
@@ -227,20 +251,41 @@ package com.xpac27.layout
 
                 for each (entity in _entities)
                 {
-                    if (expanded || entity.top())
+                    if (entity.top())
                     {
-                        entity.y = pos_start + entity.marginTop;
-                        pos_start += entity.totalHeight;
+                        if (entity.relative())
+                        {
+                            entity.y = pos_start + entity.marginTop;
+                            pos_start += entity.totalHeight;
+                        }
+                        else if (entity.absolute())
+                        {
+                            entity.y = entity.marginTop;
+                        }
                     }
                     else if (entity.vcenter())
                     {
-                        entity.y = pos_middle + entity.marginTop;
-                        pos_middle += entity.totalHeight;
+                        if (entity.relative())
+                        {
+                            entity.y = pos_middle + entity.marginTop - entity.marginBottom;
+                            pos_middle += entity.totalHeight;
+                        }
+                        else if (entity.absolute())
+                        {
+                            entity.y = height / 2 - entity.height / 2 + entity.marginTop - entity.marginBottom;
+                        }
                     }
                     else if (entity.bottom())
                     {
-                        pos_end -= entity.totalHeight;
-                        entity.y = pos_end + entity.marginTop;
+                        if (entity.relative())
+                        {
+                            pos_end -= entity.totalHeight;
+                            entity.y = pos_end + entity.marginTop;
+                        }
+                        else if (entity.absolute())
+                        {
+                            entity.x = height - entity.height - entity.marginBottom;
+                        }
                     }
 
                     if (entity.hcenter())
