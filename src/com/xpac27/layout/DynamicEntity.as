@@ -91,11 +91,13 @@ package com.xpac27.layout
                             {
                                 entity.width = Math.max(0, fill_space / fill_total);
                                 entity.height = entity.width / entity_aspect_ratio;
+                                entity.couldFill = true;
                             }
                             else
                             {
                                 entity.height = parent.height;
                                 entity.width = entity.height * entity_aspect_ratio;
+                                entity.couldFill = false;
                             }
                         }
                     }
@@ -135,11 +137,13 @@ package com.xpac27.layout
                             {
                                 entity.height = Math.max(0, fill_space / fill_total);
                                 entity.width = entity.height * entity_aspect_ratio;
+                                entity.couldFill = true;
                             }
                             else
                             {
                                 entity.width = parent.width;
                                 entity.height = entity.width / entity_aspect_ratio;
+                                entity.couldFill = false;
                             }
                         }
                     }
@@ -159,7 +163,7 @@ package com.xpac27.layout
             var expanded:Boolean = false;
             for each (entity in _entities)
             {
-                if (entity.fill() && entity.preserve())
+                if (entity.fill() && ((entity.preserve() && entity.couldFill) || entity.neglect()))
                 {
                     expanded = true;
                     break;
@@ -183,7 +187,7 @@ package com.xpac27.layout
 
                 for each (entity in _entities)
                 {
-                    if (entity.left())
+                    if (entity.left() || expanded)
                     {
                         if (entity.relative())
                         {
@@ -251,7 +255,7 @@ package com.xpac27.layout
 
                 for each (entity in _entities)
                 {
-                    if (entity.top())
+                    if (entity.top() || expanded)
                     {
                         if (entity.relative())
                         {

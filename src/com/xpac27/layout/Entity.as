@@ -81,6 +81,7 @@ package com.xpac27.layout
         final public function set marginRight(v:Number):void  { _margins[1] = v; }
         final public function set marginBottom(v:Number):void { _margins[2] = v; }
         final public function set marginLeft(v:Number):void   { _margins[3] = v; }
+        final public function set couldFill(v:Boolean):void   { _couldFill = v; }
         final public function set alignement(v:uint):void     { _alignement = v; checkAlignement(); }
 
         // GETTER
@@ -94,6 +95,7 @@ package com.xpac27.layout
         final public function get marginBottom():Number { return _margins[2]; }
         final public function get marginLeft():Number   { return _margins[3]; }
         final public function get type():String         { return _type; }
+        final public function get couldFill():Boolean   { return _couldFill; }
         final public function get aspectRatio():Number  { return width / height; }
         final public function get totalWidth():Number   { return width + _margins[1] + _margins[3]; }
         final public function get totalHeight():Number  { return height + _margins[0] + _margins[2]; }
@@ -134,6 +136,8 @@ package com.xpac27.layout
         private var _margins:Array;
         private var _subject:DisplayObjectContainer;
         private var _parent:Entity;
+
+        private var _couldFill:Boolean = true;
 
         protected var _type:String = 'Entity';
     }

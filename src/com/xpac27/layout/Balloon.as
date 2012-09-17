@@ -11,7 +11,11 @@ package com.xpac27.layout
 
             super(this, sprite, alignement, margins);
 
-            if (preserve())
+            if (fill())
+            {
+                throw new ArgumentError('You cannot use FILL on a Balloon, it should always inflate with its content.');
+            }
+            else if (preserve())
             {
                 throw new ArgumentError('You cannot user PRESERVE on a Balloon because it has no original size, it\'s extensible.');
             }
