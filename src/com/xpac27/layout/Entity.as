@@ -1,6 +1,6 @@
 package com.xpac27.layout
 {
-    public class Entity
+    public class Entity extends EventDispatcher
     {
         public function Entity(subject:DisplayObjectContainer, alignement:uint = 0x00, margins:Array = null):void
         {
@@ -60,7 +60,10 @@ package com.xpac27.layout
             _subject.dispatchEvent(new Event(Event.RESIZE, true));
         }
 
-        public function update():void {}
+        public function update():void
+        {
+            dispatchEvent(new EntityEvent(EntityEvent.UPDATED));
+        }
 
         // OVERRIDABLE SETTER
         public function set width(v:Number):void  { _subject.width = v; }
@@ -143,5 +146,8 @@ package com.xpac27.layout
     }
 
     import flash.display.DisplayObjectContainer;
+    import flash.events.EventDispatcher;
     import flash.events.Event;
+
+    import com.xpac27.layout.EntityEvent;
 }
