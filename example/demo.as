@@ -19,14 +19,14 @@ package
         {
             stage.addEventListener(MouseEvent.CLICK, onClick);
 
-            _scene = new Scene(stage, Entity.VERTICAL);
+            _scene = new Scene(stage, Entity.HORIZONTAL);
 
             // Grey
-            var b1:Box = new Box(getSprite(0xAAAAAA, 500, 500), Entity.VERTICAL);
+            var b1:Box = new Box(getSprite(0xAAAAAA, 500, 200), Entity.HORIZONTAL);
             _scene.append(b1);
 
                 // Yellow
-                var e1:Entity = new Entity(getSprite(0xFFFFAA, 60, 60), Entity.VFILL);
+                var e1:Entity = new Entity(getSprite(0xFFFFAA, 20, 60), Entity.ABSOLUTE | Entity.PRESERVE | Entity.VFILL);
                 b1.append(e1);
                 // Red
                 var e2:Entity = new Entity(getSprite(0xFFAAAA, 60, 60), Entity.HFILL);

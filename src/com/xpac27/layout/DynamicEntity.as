@@ -44,6 +44,7 @@ package com.xpac27.layout
         private function performeUpdateTB():void
         {
             trace('performeUpdateTB of ' + type);
+            computePreserve();
             computeFill();
             setFill();
         }
@@ -62,19 +63,47 @@ package com.xpac27.layout
             setChildPosition();
         }
 
+        private function computePreserve():void
+        {
+            trace('  > computePreserve');
+
+            var ratio:Number = width / height;
+            for each (var entity:Entity in _entities)
+            {
+                if (entity.preserve && entity.absolute && (entity.VFill || entity.HFill))
+                {
+                    if (entity.aspectRatio > ratio)
+                    {
+                        entity.width  = width;
+                        entity.height = width * entity.aspectRatio;
+                    }
+                    else
+                    {
+                        entity.height = height;
+                        entity.width  = height * entity.aspectRatio;
+                    }
+                    trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height);
+                }
+            }
+        }
+
         private function computeFill():void
         {
             trace('  > computeFill');
 
             var p:String = (horizontal) ? 'HFill' : 'VFill';
             var a:String = (horizontal) ? 'width' : 'height';
-            var value:Number = fillSpace() / fillTotal();
-            for each (var entity:Entity in _entities)
+            var total:Number = fillTotal();
+            if (total > 0)
             {
-                if (entity[p])
+                var value:Number = fillSpace() / total;
+                for each (var entity:Entity in _entities)
                 {
-                    entity[a] = value;
-                    trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]);
+                    if (entity[p] && entity.relative)
+                    {
+                        entity[a] = value;
+                        trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]);
+                    }
                 }
             }
         }
@@ -86,7 +115,7 @@ package com.xpac27.layout
             var p:String = (horizontal) ? 'VFill'  : 'HFill';
             for each (var entity:Entity in _entities)
             {
-                if (entity[p])
+                if (entity[p] && entity.relative)
                 {
                     entity[a] = this[a];
                     trace('    > ' + entity.type + '.height set to ' + entity[a]);
@@ -222,7 +251,7 @@ package com.xpac27.layout
             var total:Number = 0;
             for each (var entity:Entity in _entities)
             {
-                if (entity[p]) total ++;
+                if (entity[p] && entity.relative) total ++;
             }
             return total;
         }
@@ -234,7 +263,7 @@ package com.xpac27.layout
             var space:Number = (horizontal) ? width : height;
             for each (var entity:Entity in _entities)
             {
-                if (!entity[p]) space -= entity[a];
+                if (!entity[p] && entity.relative) space -= entity[a];
             }
             return space;
         }

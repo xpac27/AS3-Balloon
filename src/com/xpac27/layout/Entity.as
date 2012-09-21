@@ -7,6 +7,7 @@ package com.xpac27.layout
             _subject = subject;
             _alignement = alignement;
             _margins = (margins ||= [0, 0, 0, 0]);
+            _aspectRatio = width / height;
 
             checkAlignement();
         }
@@ -41,6 +42,11 @@ package com.xpac27.layout
             if ((_alignement & RELATIVE) + (_alignement & ABSOLUTE) == 0)
             {
                 _alignement = _alignement | RELATIVE;
+            }
+
+            if (preserve && relative)
+            {
+                throw new ArgumentError('Sorry but preserve mode does not work with relative positioning yet :(');
             }
         }
 
@@ -100,7 +106,7 @@ package com.xpac27.layout
         final public function get marginBottom():Number { return _margins[2]; }
         final public function get marginLeft():Number   { return _margins[3]; }
         final public function get type():String         { return _type; }
-        final public function get aspectRatio():Number  { return width / height; }
+        final public function get aspectRatio():Number  { return _aspectRatio; }
         final public function get totalWidth():Number   { return width + _margins[1] + _margins[3]; }
         final public function get totalHeight():Number  { return height + _margins[0] + _margins[2]; }
         final public function get subject():DisplayObjectContainer { return _subject; }
@@ -142,9 +148,10 @@ package com.xpac27.layout
         public static const TYPE_BOX    : String = 'Box';
 
         private var _alignement:uint = Entity.HORIZONTAL;
-        private var _margins:Array;
         private var _subject:DisplayObjectContainer;
         private var _parent:Entity;
+        private var _margins:Array;
+        private var _aspectRatio:Number;
 
         protected var _type:String = TYPE_ENTITY;
     }
