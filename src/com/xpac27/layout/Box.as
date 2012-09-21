@@ -2,29 +2,19 @@ package com.xpac27.layout
 {
     public class Box extends DynamicEntity
     {
-        public function Box(subject:DisplayObjectContainer, alignement:uint = 0x00, margins:Array = null):void
+        public function Box(subject:DisplayObjectContainer, alignement:uint = 0x0, margins:Array = null):void
         {
             super(this, subject, alignement, margins);
 
-            if (fill())
+            if (HFill || VFill)
             {
                 throw new ArgumentError('Boxes must have a fixed size, you cannot use FILL on a Box.');
             }
-            else if (preserve())
-            {
-                throw new ArgumentError('You cannot user PRESERVE on a Box because its size is fixed.');
-            }
-
-            _type = 'Box';
+            _type = Entity.TYPE_BOX;
         }
 
-        override public function get parent():Entity { return this; }
-
-        override protected function afterUpdate():void
-        {
-            scaleX = 1;
-            scaleY = 1;
-        }
+        override public function set width(v:Number):void  {}
+        override public function set height(v:Number):void {}
     }
 
     import flash.display.Sprite;

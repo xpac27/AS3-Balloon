@@ -10,8 +10,6 @@ package com.xpac27.layout
             {
                 throw new IllegalOperationError('DynamicEntity cannot be instantiated directly.');
             }
-
-            _type = 'DynamicEntity';
         }
 
         final public function append(entity:Entity):void
@@ -19,7 +17,6 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.push(entity);
-                updateAll();
             }
         }
 
@@ -28,7 +25,6 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.unshift(entity);
-                updateAll();
             }
         }
 
@@ -36,282 +32,219 @@ package com.xpac27.layout
         {
             if (_entities.length > 0 && parent)
             {
-                beforeUpdate();
                 performeUpdateTB();
                 for each (var entity:Entity in _entities)
                 {
                     entity.update();
                 }
                 performeUpdateBT();
-                afterUpdate();
             }
         }
 
-        final private function performeUpdateTB():void
+        private function performeUpdateTB():void
         {
-            var entity:Entity;
-            var fill_total:Number = 0;
-            var fill_space:Number = 0;
-            var entity_aspect_ratio:Number = 0;
-            var parent_aspect_ratio:Number = parent.aspectRatio;
-
-            if (horizontal())
-            {
-                fill_space = parent.width;
-
-                for each (entity in _entities)
-                {
-                    if (entity.relative())
-                    {
-                        if (entity.fill())
-                        {
-                            fill_total ++;
-                        }
-                        else if (entity.fit())
-                        {
-                            fill_space -= entity.totalWidth;
-                        }
-                    }
-                }
-
-                var h:Number = 0;
-                for each (entity in _entities)
-                {
-                    if (entity.fill())
-                    {
-                        if (entity.neglect())
-                        {
-                            entity.width = Math.max(0, fill_space / fill_total - entity.marginLeft - entity.marginRight);
-                        }
-                        // Do not handle margins because it's too complex
-                        else if (entity.preserve())
-                        {
-                            entity_aspect_ratio = entity.aspectRatio;
-                            if (entity_aspect_ratio > parent_aspect_ratio)
-                            {
-                                entity.width = Math.max(0, fill_space / fill_total);
-                                entity.height = entity.width / entity_aspect_ratio;
-                                entity.couldFill = true;
-                            }
-                            else
-                            {
-                                entity.height = parent.height;
-                                entity.width = entity.height * entity_aspect_ratio;
-                                entity.couldFill = false;
-                            }
-                        }
-                    }
-                    h = entity.totalHeight > h ? entity.totalHeight : h;
-                }
-                height = h > height ? h : height;
-            }
-            else if (vertical())
-            {
-                fill_space = parent.height;
-
-                for each (entity in _entities)
-                {
-                    if (entity.fill())
-                    {
-                        fill_total ++;
-                    }
-                    else if (entity.fit())
-                    {
-                        fill_space -= entity.totalHeight;
-                    }
-                }
-
-                var w:Number = 0;
-                for each (entity in _entities)
-                {
-                    if (entity.fill())
-                    {
-                        if (entity.neglect())
-                        {
-                            entity.height = Math.max(0, fill_space / fill_total - entity.marginTop - entity.marginBottom);
-                        }
-                        else if (entity.preserve())
-                        {
-                            entity_aspect_ratio = entity.width / entity.height;
-                            if (entity_aspect_ratio > parent_aspect_ratio)
-                            {
-                                entity.height = Math.max(0, fill_space / fill_total);
-                                entity.width = entity.height * entity_aspect_ratio;
-                                entity.couldFill = true;
-                            }
-                            else
-                            {
-                                entity.width = parent.width;
-                                entity.height = entity.width / entity_aspect_ratio;
-                                entity.couldFill = false;
-                            }
-                        }
-                    }
-                    w = entity.totalWidth > w ? entity.totalWidth : w;
-                }
-                width = w > width ? w : width;
-            }
+            trace('performeUpdateTB of ' + type);
+            computeFill();
+            setFill();
         }
 
-        final private function performeUpdateBT():void
+        private function performeUpdateBT():void
         {
-            var entity:Entity;
-            var pos_start:Number = 0;
-            var pos_middle:Number = 0;
-            var pos_end:Number = 0;
-
-            var expanded:Boolean = false;
-            for each (entity in _entities)
+            trace('performeUpdateBT of ' + type);
+            if ((horizontal && HFill) || (vertical && VFill))
             {
-                if (entity.fill() && ((entity.preserve() && entity.couldFill) || entity.neglect()))
-                {
-                    expanded = true;
-                    break;
-                }
+                alignChildPosition();
             }
-
-            if (horizontal())
+            else
             {
-                if (!expanded)
-                {
-                    for each (entity in _entities)
-                    {
-                        if (entity.hcenter() && entity.relative())
-                        {
-                            pos_middle += entity.totalWidth;
-                        }
-                    }
-                    pos_middle = width / 2 - pos_middle / 2;
-                    pos_end = width;
-                }
-
-                for each (entity in _entities)
-                {
-                    if (entity.left() || expanded)
-                    {
-                        if (entity.relative())
-                        {
-                            entity.x = pos_start + entity.marginLeft;
-                            pos_start += entity.totalWidth;
-                        }
-                        else if (entity.absolute())
-                        {
-                            entity.x = entity.marginLeft;
-                        }
-                    }
-                    else if (entity.hcenter())
-                    {
-                        if (entity.relative())
-                        {
-                            entity.x = pos_middle + entity.marginLeft - entity.marginRight;
-                            pos_middle += entity.totalWidth;
-                        }
-                        else if (entity.absolute())
-                        {
-                            entity.x = width / 2 - entity.width / 2 + entity.marginLeft - entity.marginRight;
-                        }
-                    }
-                    else if (entity.right())
-                    {
-                        if (entity.relative())
-                        {
-                            pos_end -= entity.totalWidth;
-                            entity.x = pos_end + entity.marginLeft;
-                        }
-                        else if (entity.absolute())
-                        {
-                            entity.x = width - entity.width - entity.marginRight;
-                        }
-                    }
-
-                    if (entity.vcenter())
-                    {
-                        entity.y = height / 2 - entity.height / 2 - entity.marginBottom + entity.marginTop;
-                    }
-                    else if (entity.top())
-                    {
-                        entity.y = entity.marginTop;
-                    }
-                    else if (entity.bottom())
-                    {
-                        entity.y = height - entity.height - entity.marginBottom;
-                    }
-                }
+                computeChildPosition();
             }
-            else if (vertical())
+            setChildPosition();
+        }
+
+        private function computeFill():void
+        {
+            trace('  > computeFill');
+
+            var p:String = (horizontal) ? 'HFill' : 'VFill';
+            var a:String = (horizontal) ? 'width' : 'height';
+            var value:Number = fillSpace() / fillTotal();
+            for each (var entity:Entity in _entities)
             {
-                if (!expanded)
+                if (entity[p])
                 {
-                    for each (entity in _entities)
-                    {
-                        if (entity.vcenter() && entity.relative())
-                        {
-                            pos_middle += entity.totalHeight;
-                        }
-                    }
-                    pos_middle = height / 2 - pos_middle / 2;
-                    pos_end = height;
-                }
-
-                for each (entity in _entities)
-                {
-                    if (entity.top() || expanded)
-                    {
-                        if (entity.relative())
-                        {
-                            entity.y = pos_start + entity.marginTop;
-                            pos_start += entity.totalHeight;
-                        }
-                        else if (entity.absolute())
-                        {
-                            entity.y = entity.marginTop;
-                        }
-                    }
-                    else if (entity.vcenter())
-                    {
-                        if (entity.relative())
-                        {
-                            entity.y = pos_middle + entity.marginTop - entity.marginBottom;
-                            pos_middle += entity.totalHeight;
-                        }
-                        else if (entity.absolute())
-                        {
-                            entity.y = height / 2 - entity.height / 2 + entity.marginTop - entity.marginBottom;
-                        }
-                    }
-                    else if (entity.bottom())
-                    {
-                        if (entity.relative())
-                        {
-                            pos_end -= entity.totalHeight;
-                            entity.y = pos_end + entity.marginTop;
-                        }
-                        else if (entity.absolute())
-                        {
-                            entity.x = height - entity.height - entity.marginBottom;
-                        }
-                    }
-
-                    if (entity.hcenter())
-                    {
-                        entity.x = width / 2 - entity.width / 2 - entity.marginRight + entity.marginLeft;
-                    }
-                    else if (entity.left())
-                    {
-                        entity.x = entity.marginLeft;
-                    }
-                    else if (entity.right())
-                    {
-                        entity.x = width - entity.width - entity.marginRight;
-                    }
+                    entity[a] = value;
+                    trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]);
                 }
             }
         }
 
-        protected function beforeUpdate():void {}
-        protected function afterUpdate():void {}
+        private function setFill():void
+        {
+            trace('  > setFill');
+            var a:String = (horizontal) ? 'height' : 'width';
+            var p:String = (horizontal) ? 'VFill'  : 'HFill';
+            for each (var entity:Entity in _entities)
+            {
+                if (entity[p])
+                {
+                    entity[a] = this[a];
+                    trace('    > ' + entity.type + '.height set to ' + entity[a]);
+                }
+            }
+        }
 
-        protected var _entities:Array = [];
+        private function alignChildPosition():void
+        {
+            trace('  > alignChildPosition');
+            var a1 : String = (horizontal) ? 'x'          : 'y';
+            var a2 : String = (horizontal) ? 'maringLeft' : 'marginTop';
+            var a3 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
+            var pos_start : Number = 0;
+            for each (var entity:Entity in _entities)
+            {
+                entity[a1] = pos_start + entity[a2];
+                pos_start += entity[a3];
+                trace('    > ' + entity.type + '.x set to ' + entity[a1]);
+            }
+        }
+
+        private function setChildPosition():void
+        {
+            trace('  > setChildPosition');
+            var p1 : String = (horizontal) ? 'vcenter'      : 'hcenter';
+            var p2 : String = (horizontal) ? 'top'          : 'left';
+            var p3 : String = (horizontal) ? 'bottom'       : 'right';
+            var a1 : String = (horizontal) ? 'y'            : 'x';
+            var a2 : String = (horizontal) ? 'height'       : 'width';
+            var a3 : String = (horizontal) ? 'marginBottom' : 'marginRight';
+            var a4 : String = (horizontal) ? 'marginTop'    : 'marginLeft';
+            var info:String = '';
+            for each (var entity:Entity in _entities)
+            {
+                if (entity[p1])
+                {
+                    entity[a1] = this[a2] / 2 - entity[a2] / 2 - entity[a3] + entity[a4];
+                    info = p1;
+                }
+                else if (entity[p2])
+                {
+                    entity[a1] = entity[a4];
+                    info = p2;
+                }
+                else if (entity[p3])
+                {
+                    entity[a1] = this[a2] - entity[a2] - entity[a3];
+                    info = p3;
+                }
+                trace('    > ' + entity.type + '.y set to ' + entity[a1] + ' (' + info + ')');
+            }
+        }
+
+        private function computeChildPosition():void
+        {
+            trace('  > computeChildPosition');
+            var p1 : String = (horizontal) ? 'left'        : 'top';
+            var p2 : String = (horizontal) ? 'hcenter'     : 'vcenter';
+            var p3 : String = (horizontal) ? 'right'       : 'bottom';
+            var a1 : String = (horizontal) ? 'x'           : 'y';
+            var a2 : String = (horizontal) ? 'marginLeft'  : 'marginTop';
+            var a3 : String = (horizontal) ? 'totalWidth'  : 'totalHeight';
+            var a4 : String = (horizontal) ? 'marginRight' : 'marginBottom';
+            var a5 : String = (horizontal) ? 'width'       : 'height';
+            var info:String = '';
+            var pos_start  : Number = 0;
+            var pos_middle : Number = posMiddle();
+            var pos_end    : Number = this[a5];
+            for each (var entity:Entity in _entities)
+            {
+                if (entity[p1])
+                {
+                    if (entity.relative)
+                    {
+                        entity[a1] = pos_start + entity[a2];
+                        pos_start += entity[a3];
+                    }
+                    else if (entity.absolute)
+                    {
+                        entity[a1] = entity[a2];
+                    }
+                    info = 'left';
+                }
+                else if (entity[p2])
+                {
+                    if (entity.relative)
+                    {
+                        entity[a1] = pos_middle + entity[a2] - entity[a4];
+                        pos_middle += entity[a3];
+                    }
+                    else if (entity.absolute)
+                    {
+                        entity[a1] = this[a5] / 2 - entity[a5] / 2 + entity[a2] - entity[a4];
+                    }
+                    info = 'hcenter';
+                }
+                else if (entity[p3])
+                {
+                    if (entity.relative)
+                    {
+                        pos_end -= entity[a3];
+                        entity[a1] = pos_end + entity[a2];
+                    }
+                    else if (entity.absolute)
+                    {
+                        entity[a1] = this[a5] - entity[a5] - entity[a4];
+                    }
+                    info = 'right';
+                }
+                trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')');
+            }
+        }
+
+        private function posMiddle():Number
+        {
+            var a1 : String = (horizontal) ? 'width'      : 'height';
+            var a2 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
+            var value:Number = 0;
+            for each (var entity:Entity in _entities)
+            {
+                if (entity.hcenter && entity.relative)
+                {
+                    value += entity[a2];
+                }
+            }
+            return this[a1] / 2 - value / 2;
+        }
+
+        private function fillTotal():Number
+        {
+            var p:String = (horizontal) ? 'HFill' : 'VFill';
+            var total:Number = 0;
+            for each (var entity:Entity in _entities)
+            {
+                if (entity[p]) total ++;
+            }
+            return total;
+        }
+
+        private function fillSpace():Number
+        {
+            var p : String = (horizontal) ? 'HFill'      : 'VFill';
+            var a : String = (horizontal) ? 'totalWidth' : 'totalHeight';
+            var space:Number = (horizontal) ? width : height;
+            for each (var entity:Entity in _entities)
+            {
+                if (!entity[p]) space -= entity[a];
+            }
+            return space;
+        }
+
+        protected function get entities():Array
+        {
+            return _entities;
+        }
+
+        private var _entities:Array = [];
     }
 
     import flash.display.DisplayObjectContainer;

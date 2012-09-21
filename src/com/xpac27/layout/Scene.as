@@ -2,15 +2,15 @@ package com.xpac27.layout
 {
     public class Scene extends DynamicEntity
     {
-        public function Scene(subject:Stage, alignement:uint):void
+        public function Scene(subject:Stage, alignement:uint = 0x0):void
         {
             super(this, subject, alignement, [0, 0, 0, 0]);
 
-            if (fill())
+            if (HFill || VFill)
             {
-                throw new ArgumentError('You cannot user FILL on a Scene, it will always fit the entier stage.');
+                throw new ArgumentError('You cannot user FILL on a Scene, it will always fit to the stage.');
             }
-            else if (preserve())
+            else if (preserve)
             {
                 throw new ArgumentError('You cannot user PRESERVE on a Scene because the stage could be resized to any aspect ratio.');
             }
@@ -18,8 +18,7 @@ package com.xpac27.layout
             {
                 subject.addEventListener(Event.RESIZE, onSubjectResize);
             }
-
-            _type = 'Scene';
+            _type = Entity.TYPE_SCENE;
         }
 
         private function onSubjectResize(event:Event):void
@@ -44,6 +43,4 @@ package com.xpac27.layout
     import flash.display.Stage;
     import flash.events.Event;
     import flash.errors.IllegalOperationError;
-
-    import com.xpac27.layout.Balloon;
 }
