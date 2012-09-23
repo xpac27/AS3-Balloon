@@ -72,14 +72,7 @@ package com.xpac27.layout
         {
             CONFIG::DEBUG { trace('performeUpdateBT of ' + type); }
 
-            //if ((horizontal && (HFill || contains('HFill'))) || (vertical && (VFill || contains('VFill'))))
-            //{
-                //alignChildPosition();
-            //}
-            //else
-            //{
-                computeChildPosition();
-            //}
+            computeChildPosition();
             setChildPosition();
         }
 
@@ -146,33 +139,6 @@ package com.xpac27.layout
 
                     CONFIG::DEBUG { trace('    > ' + entity.type + '.height set to ' + entity[a]); }
                 }
-            }
-        }
-
-        private function alignChildPosition():void
-        {
-            CONFIG::DEBUG { trace('  > alignChildPosition'); }
-
-            var a1 : String = (horizontal) ? 'x'           : 'y';
-            var a2 : String = (horizontal) ? 'width'       : 'height';
-            var a3 : String = (horizontal) ? 'totalWidth'  : 'totalHeight';
-            var a4 : String = (horizontal) ? 'marginLeft'  : 'marginTop';
-            var a5 : String = (horizontal) ? 'marginRight' : 'marginBottom';
-            var pos_start : Number = 0;
-            for each (var entity:Entity in _entities)
-            {
-                if (entity.relative)
-                {
-                    entity[a1] = pos_start + entity[a4];
-                    pos_start += entity[a3];
-                }
-                else
-                {
-                    entity[a1] = pos_start + entity[a2];
-                    entity[a1] = this[a2] / 2 - entity[a2] / 2 - entity[a5] + entity[a4];
-                }
-
-                CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]); }
             }
         }
 
@@ -245,7 +211,7 @@ package com.xpac27.layout
                 {
                     if (entity.relative)
                     {
-                        entity[a1] = pos_middle + entity[a2] - entity[a4];
+                        entity[a1] = pos_middle + entity[a2];
                         pos_middle += entity[a3];
                     }
                     else if (entity.absolute)

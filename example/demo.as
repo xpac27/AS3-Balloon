@@ -35,7 +35,7 @@ package
                 e2.marginRight = 10;
                 b1.append(e2);
 
-                var e3:Entity = new Entity(getSprite(0xFFAAAA, 60, 60), Entity.LEFT | Entity.HFILL);
+                var e3:Entity = new Entity(getSprite(0xFFAAAA, 60, 60), Entity.HFILL);
                 e3.marginLeft = 10;
                 e3.marginRight = 10;
                 b1.append(e3);
