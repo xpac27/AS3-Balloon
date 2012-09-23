@@ -87,13 +87,13 @@ package com.xpac27.layout
                 {
                     if (entity.aspectRatio > ratio)
                     {
-                        entity.width  = width;
-                        entity.height = width * entity.aspectRatio;
+                        entity.width  = width - entity.marginLeft - entity.marginRight;
+                        entity.height = entity.width * entity.aspectRatio;
                     }
                     else
                     {
-                        entity.height = height;
-                        entity.width  = height * entity.aspectRatio;
+                        entity.height = height - entity.marginTop - entity.marginBottom;
+                        entity.width  = entity.height * entity.aspectRatio;
                     }
 
                     CONFIG::DEBUG { trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height); }
@@ -115,7 +115,7 @@ package com.xpac27.layout
                 var value:Number = fillSpace() / total;
                 for each (var entity:Entity in _entities)
                 {
-                    if (entity[p1] && entity.relative)
+                    if (entity[p1])
                     {
                         entity[a1] = value - entity[a2] - entity[a3];
 
@@ -133,7 +133,7 @@ package com.xpac27.layout
             var p:String = (horizontal) ? 'VFill'  : 'HFill';
             for each (var entity:Entity in _entities)
             {
-                if (entity[p] && entity.relative)
+                if (entity[p] && entity.neglect)
                 {
                     entity[a] = this[a];
 
@@ -268,7 +268,7 @@ package com.xpac27.layout
             var total:Number = 0;
             for each (var entity:Entity in _entities)
             {
-                if (entity[p] && entity.relative) total ++;
+                if (entity[p] && entity.neglect) total ++;
             }
             return total;
         }

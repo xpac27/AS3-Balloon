@@ -25,25 +25,30 @@ package
             var b1:Box = new Box(getSprite(0xAAAAAA, 500, 200), Entity.HORIZONTAL);
             _scene.append(b1);
 
-                var e1:Entity = new Entity(getSprite(0xFFFFAA, 60, 60), Entity.LEFT);
-                e1.marginLeft = 10;
-                e1.marginRight = 10;
+                var e1:Entity = new Entity(getSprite(0xFFFFAA, 60, 60), Entity.VFILL | Entity.HFILL | Entity.ABSOLUTE | Entity.PRESERVE);
+                e1.marginTop = 10;
+                e1.marginBottom = 10;
                 b1.append(e1);
 
-                var e2:Entity = new Entity(getSprite(0xFFAAFF, 60, 60), Entity.LEFT);
-                e2.marginLeft = 10;
-                e2.marginRight = 10;
-                b1.append(e2);
+                //var e1:Entity = new Entity(getSprite(0xFFFFAA, 60, 60), Entity.LEFT);
+                //e1.marginLeft = 10;
+                //e1.marginRight = 10;
+                //b1.append(e1);
 
-                var e3:Entity = new Entity(getSprite(0xFFAAAA, 60, 60), Entity.HFILL);
-                e3.marginLeft = 10;
-                e3.marginRight = 10;
-                b1.append(e3);
+                //var e2:Entity = new Entity(getSprite(0xFFAAFF, 60, 60), Entity.LEFT);
+                //e2.marginLeft = 10;
+                //e2.marginRight = 10;
+                //b1.append(e2);
 
-                var e4:Entity = new Entity(getSprite(0xAAAAFF, 60, 60), Entity.RIGHT);
-                e4.marginLeft = 10;
-                e4.marginRight = 10;
-                b1.append(e4);
+                //var e3:Entity = new Entity(getSprite(0xFFAAAA, 60, 60), Entity.HFILL);
+                //e3.marginLeft = 10;
+                //e3.marginRight = 10;
+                //b1.append(e3);
+
+                //var e4:Entity = new Entity(getSprite(0xAAAAFF, 60, 60), Entity.RIGHT);
+                //e4.marginLeft = 10;
+                //e4.marginRight = 10;
+                //b1.append(e4);
 
 /*
                 // Yellow
