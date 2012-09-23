@@ -57,7 +57,7 @@ package com.xpac27.layout
                 return false;
             }
             _parent = entity;
-            _parent.subject.addChild(_subject);
+            Scene.display(_subject);
             return true;
         }
 
@@ -88,8 +88,8 @@ package com.xpac27.layout
         public function get HFill():Boolean { return 0 != (_alignement & HFILL); }
 
         // SETTER
-        final public function set x(v:Number):void            { _subject.x = v - v % 1; }
-        final public function set y(v:Number):void            { _subject.y = v - v % 1; }
+        final public function set x(v:Number):void            { _x = (v - v % 1); _subject.x = _x + _parent.subject.x; }
+        final public function set y(v:Number):void            { _y = (v - v % 1); _subject.y = _y + _parent.subject.y; }
         final public function set margins(v:Array):void       { _margins = v; }
         final public function set marginTop(v:Number):void    { _margins[0] = v; }
         final public function set marginRight(v:Number):void  { _margins[1] = v; }
@@ -98,8 +98,8 @@ package com.xpac27.layout
         final public function set alignement(v:uint):void     { _alignement = v; checkAlignement(); }
 
         // GETTER
-        final public function get x():Number            { return _subject.x; }
-        final public function get y():Number            { return _subject.y; }
+        final public function get x():Number            { return _x; }
+        final public function get y():Number            { return _y; }
         final public function get margins():Array       { return _margins; }
         final public function get marginTop():Number    { return _margins[0]; }
         final public function get marginRight():Number  { return _margins[1]; }
@@ -152,6 +152,8 @@ package com.xpac27.layout
         private var _parent:Entity;
         private var _margins:Array;
         private var _aspectRatio:Number;
+        private var _x:Number = 0;
+        private var _y:Number = 0;
 
         protected var _type:String = TYPE_ENTITY;
     }
@@ -161,4 +163,5 @@ package com.xpac27.layout
     import flash.events.Event;
 
     import com.xpac27.layout.EntityEvent;
+    import com.xpac27.layout.Scene;
 }

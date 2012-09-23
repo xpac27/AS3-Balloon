@@ -37,6 +37,18 @@ package
                 // Blue
                 var e4:Entity = new Entity(getSprite(0xAAAAFF, 60, 60), Entity.BOTTOM | Entity.RIGHT);
                 b1.append(e4);
+
+            var g1:Group = new Group(Entity.VERTICAL);
+
+                // White
+                var e5:Entity = new Entity(getSprite(0xFFFFFF, 60, 60));
+                g1.append(e5);
+
+                // Purple
+                var e6:Entity = new Entity(getSprite(0xFFAAFF, 60, 60));
+                g1.append(e6);
+
+            b1.append(g1);
         }
 
         private function getSprite(color:uint, width:Number, height:Number):Sprite

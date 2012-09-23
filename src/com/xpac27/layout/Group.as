@@ -5,62 +5,52 @@ package com.xpac27.layout
         public function Group(alignement:uint = 0x0):void
         {
             var sprite:Sprite = new Sprite();
-            sprite.graphics.beginFill(0x000000, 0);
+            sprite.graphics.beginFill(0x000000, 0.5);
             sprite.graphics.drawRect(0, 0, 1, 1);
             sprite.graphics.endFill();
-            super(sprite, alignement);
+            super(this, sprite, alignement, [0, 0, 0, 0]);
 
-            if (fill())
+            if (HFill || VFill)
             {
                 throw new ArgumentError('You cannot user FILL on a Group, it will always fit its content.');
             }
             _type = Entity.TYPE_GROUP;
         }
 
-        override public function set width(v:Number):void  {}
-        override public function set height(v:Number):void {}
-        //override public function set width(v:Number):void  { _subject.scaleX = 1 / _parent.subject.scaleX; }
-        //override public function set height(v:Number):void { _subject.scaleY = 1 / _parent.subject.scaleY; }
+        //override public function set width(v:Number):void  {}
+        //override public function set height(v:Number):void {}
+        //override public function set width(v:Number):void  { subject.width = v; subject.scaleX = 1 / parent.subject.scaleX; }
+        //override public function set height(v:Number):void { subject.height = v; subject.scaleY = 1 / parent.subject.scaleY; }
 
+        //override public function get VFill():Boolean
+        //{
+            //return contains('VFill');
+        //}
+        //override public function get HFill():Boolean
+        //{
+            //return contains('HFill');
+        //}
         override public function get width():Number
         {
-            return subject.stage.stageWidth;
+            var min:Number = 0;
+            var max:Number = 0;
+            for each (var entity:Entity in entities)
+            {
+                min = entity.x < min ? entity.x : min;
+                max = entity.x + entity.width > max ? entity.x + entity.width : max;
+            }
+            return max - min;
         }
         override public function get height():Number
         {
-            return subject.stage.stageHeight;
-        }
-        override public function get VFill():Boolean
-        {
-            for (var entity:Entity in entities)
+            var min:Number = 0;
+            var max:Number = 0;
+            for each (var entity:Entity in entities)
             {
-                if (entities.VFill()) return true;
+                min = entity.y < min ? entity.y : min;
+                max = entity.y + entity.height > max ? entity.y + entity.height : max;
             }
-            return false;
-        }
-        override public function get HFill():Boolean
-        {
-            for (var entity:Entity in entities)
-            {
-                if (entities.HFill()) return true;
-            }
-            return false;
-        }
-        override public function get width():Number
-        {
-            if (HFill)
-            {
-                return parent.width;
-            }
-            return subject.stage.stageWidth;
-        }
-        override public function get height():Number
-        {
-            if (VFill)
-            {
-                return parent.height;
-            }
-            return subject.stage.stageHeight;
+            return max - min;
         }
     }
 

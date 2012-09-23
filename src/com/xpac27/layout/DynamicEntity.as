@@ -17,6 +17,7 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.push(entity);
+                update();
             }
         }
 
@@ -25,6 +26,7 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.unshift(entity);
+                update();
             }
         }
 
@@ -134,7 +136,7 @@ package com.xpac27.layout
             {
                 entity[a1] = pos_start + entity[a2];
                 pos_start += entity[a3];
-                trace('    > ' + entity.type + '.x set to ' + entity[a1]);
+                trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]);
             }
         }
 
@@ -166,7 +168,7 @@ package com.xpac27.layout
                     entity[a1] = this[a2] - entity[a2] - entity[a3];
                     info = p3;
                 }
-                trace('    > ' + entity.type + '.y set to ' + entity[a1] + ' (' + info + ')');
+                trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')');
             }
         }
 
@@ -266,6 +268,15 @@ package com.xpac27.layout
                 if (!entity[p] && entity.relative) space -= entity[a];
             }
             return space;
+        }
+
+        protected function contains(a:String):Boolean
+        {
+            for each (var entity:Entity in _entities)
+            {
+                if (entity[a]) return true;
+            }
+            return false;
         }
 
         protected function get entities():Array

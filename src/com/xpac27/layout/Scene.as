@@ -19,6 +19,8 @@ package com.xpac27.layout
                 subject.addEventListener(Event.RESIZE, onSubjectResize);
             }
             _type = Entity.TYPE_SCENE;
+            _stage = subject;
+            checkDisplayQueue();
         }
 
         private function onSubjectResize(event:Event):void
@@ -38,8 +40,25 @@ package com.xpac27.layout
 
         override public function get width():Number  { return subject.stage.stageWidth; }
         override public function get height():Number { return subject.stage.stageHeight; }
+
+        static public function display(o:DisplayObjectContainer):void
+        {
+            _displayQueue.push(o);
+            checkDisplayQueue();
+        }
+        static private function checkDisplayQueue():void
+        {
+            while (_stage && _displayQueue.length)
+            {
+                _stage.addChild(_displayQueue.shift());
+            }
+        }
+
+        private static var _stage:Stage = null;
+        private static var _displayQueue:Array = [];
     }
 
+    import flash.display.DisplayObjectContainer;
     import flash.display.Stage;
     import flash.events.Event;
     import flash.errors.IllegalOperationError;
