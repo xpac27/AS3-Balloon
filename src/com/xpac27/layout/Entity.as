@@ -63,9 +63,12 @@ package com.xpac27.layout
 
         public function updateAll():void
         {
-            trace('');
-            trace('============================');
-            trace('');
+            CONFIG::DEBUG
+            {
+                trace('');
+                trace('============================');
+                trace('');
+            }
             _subject.dispatchEvent(new Event(Event.RESIZE, true));
         }
 

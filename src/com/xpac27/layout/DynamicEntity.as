@@ -45,7 +45,8 @@ package com.xpac27.layout
 
         private function performeUpdateTB():void
         {
-            trace('performeUpdateTB of ' + type);
+            CONFIG::DEBUG { trace('performeUpdateTB of ' + type); }
+
             computePreserve();
             computeFill();
             setFill();
@@ -53,7 +54,8 @@ package com.xpac27.layout
 
         private function performeUpdateBT():void
         {
-            trace('performeUpdateBT of ' + type);
+            CONFIG::DEBUG { trace('performeUpdateBT of ' + type); }
+
             if ((horizontal && HFill) || (vertical && VFill))
             {
                 alignChildPosition();
@@ -67,7 +69,7 @@ package com.xpac27.layout
 
         private function computePreserve():void
         {
-            trace('  > computePreserve');
+            CONFIG::DEBUG { trace('  > computePreserve'); }
 
             var ratio:Number = width / height;
             for each (var entity:Entity in _entities)
@@ -84,14 +86,15 @@ package com.xpac27.layout
                         entity.height = height;
                         entity.width  = height * entity.aspectRatio;
                     }
-                    trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height);
+
+                    CONFIG::DEBUG { trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height); }
                 }
             }
         }
 
         private function computeFill():void
         {
-            trace('  > computeFill');
+            CONFIG::DEBUG { trace('  > computeFill'); }
 
             var p:String = (horizontal) ? 'HFill' : 'VFill';
             var a:String = (horizontal) ? 'width' : 'height';
@@ -104,7 +107,8 @@ package com.xpac27.layout
                     if (entity[p] && entity.relative)
                     {
                         entity[a] = value;
-                        trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]);
+
+                        CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]); }
                     }
                 }
             }
@@ -112,7 +116,8 @@ package com.xpac27.layout
 
         private function setFill():void
         {
-            trace('  > setFill');
+            CONFIG::DEBUG { trace('  > setFill'); }
+
             var a:String = (horizontal) ? 'height' : 'width';
             var p:String = (horizontal) ? 'VFill'  : 'HFill';
             for each (var entity:Entity in _entities)
@@ -120,14 +125,16 @@ package com.xpac27.layout
                 if (entity[p] && entity.relative)
                 {
                     entity[a] = this[a];
-                    trace('    > ' + entity.type + '.height set to ' + entity[a]);
+
+                    CONFIG::DEBUG { trace('    > ' + entity.type + '.height set to ' + entity[a]); }
                 }
             }
         }
 
         private function alignChildPosition():void
         {
-            trace('  > alignChildPosition');
+            CONFIG::DEBUG { trace('  > alignChildPosition'); }
+
             var a1 : String = (horizontal) ? 'x'          : 'y';
             var a2 : String = (horizontal) ? 'maringLeft' : 'marginTop';
             var a3 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
@@ -136,13 +143,15 @@ package com.xpac27.layout
             {
                 entity[a1] = pos_start + entity[a2];
                 pos_start += entity[a3];
-                trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]);
+
+                CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]); }
             }
         }
 
         private function setChildPosition():void
         {
-            trace('  > setChildPosition');
+            CONFIG::DEBUG { trace('  > setChildPosition'); }
+
             var p1 : String = (horizontal) ? 'vcenter'      : 'hcenter';
             var p2 : String = (horizontal) ? 'top'          : 'left';
             var p3 : String = (horizontal) ? 'bottom'       : 'right';
@@ -168,13 +177,15 @@ package com.xpac27.layout
                     entity[a1] = this[a2] - entity[a2] - entity[a3];
                     info = p3;
                 }
-                trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')');
+
+                CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')'); }
             }
         }
 
         private function computeChildPosition():void
         {
-            trace('  > computeChildPosition');
+            CONFIG::DEBUG { trace('  > computeChildPosition'); }
+
             var p1 : String = (horizontal) ? 'left'        : 'top';
             var p2 : String = (horizontal) ? 'hcenter'     : 'vcenter';
             var p3 : String = (horizontal) ? 'right'       : 'bottom';
@@ -228,7 +239,8 @@ package com.xpac27.layout
                     }
                     info = 'right';
                 }
-                trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')');
+
+                CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')'); }
             }
         }
 

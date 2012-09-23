@@ -4,11 +4,7 @@ package com.xpac27.layout
     {
         public function Group(alignement:uint = 0x0):void
         {
-            var sprite:Sprite = new Sprite();
-            //sprite.graphics.beginFill(0x000000, 0.5);
-            //sprite.graphics.drawRect(0, 0, 1, 1);
-            //sprite.graphics.endFill();
-            super(this, sprite, alignement, [0, 0, 0, 0]);
+            super(this, new Sprite(), alignement, [0, 0, 0, 0]);
 
             if (super.HFill || super.VFill)
             {
