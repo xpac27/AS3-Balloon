@@ -12,14 +12,14 @@ package
 
         private function onClick(event:MouseEvent):void
         {
-            _scene.updateAll();
+            _scene.update();
         }
 
         private function onAddedToStage(event:Event):void
         {
             stage.addEventListener(MouseEvent.CLICK, onClick);
 
-            _scene = new Scene(stage, Entity.HORIZONTAL);
+            _scene = new Scene(stage, Entity.HORIZONTAL, 100);
 
             // Grey
             var b1:Box = new Box(getSprite(0xAAAAAA, 500, 200), Entity.HORIZONTAL);

@@ -2,7 +2,7 @@ package com.xpac27.layout
 {
     public class Scene extends DynamicEntity
     {
-        public function Scene(subject:Stage, alignement:uint = 0x0):void
+        public function Scene(subject:Stage, alignement:uint = 0x0, autoUpdate:Number = 0):void
         {
             super(this, subject, alignement, [0, 0, 0, 0]);
 
@@ -18,14 +18,22 @@ package com.xpac27.layout
             {
                 subject.addEventListener(Event.RESIZE, onSubjectResize);
             }
-            _type = Entity.TYPE_SCENE;
-            _stage = subject;
-            checkDisplayQueue();
+            _type       = Entity.TYPE_SCENE;
+            _stage      = subject;
+            _autoUpdate = autoUpdate;
         }
 
         private function onSubjectResize(event:Event):void
         {
-            update();
+            if (_autoUpdate == 0)
+            {
+                update();
+            }
+            else if (_autoUpdate > 0)
+            {
+                clearTimeout(_updateTimeout);
+                _updateTimeout = setTimeout(update, _autoUpdate);
+            }
         }
 
         override public function addTo(entity:Entity):Boolean
@@ -33,33 +41,31 @@ package com.xpac27.layout
             throw new IllegalOperationError('Scene cannot be appended or prepended to anything.');
         }
 
-        override public function get parent():Entity { return this; }
-
         override public function set width(v:Number):void  {}
         override public function set height(v:Number):void {}
 
+        override public function get parent():Entity { return this; }
         override public function get width():Number  { return _stage ? _stage.stageWidth : 0; }
         override public function get height():Number { return _stage ? _stage.stageHeight : 0; }
 
         static public function display(o:DisplayObjectContainer):void
         {
             _displayQueue.push(o);
-            checkDisplayQueue();
-        }
-        static private function checkDisplayQueue():void
-        {
             while (_stage && _displayQueue.length)
             {
                 _stage.addChild(_displayQueue.shift());
             }
         }
-
-        private static var _stage:Stage = null;
-        private static var _displayQueue:Array = [];
+        private static var _stage         : Stage = null;
+        private static var _displayQueue  : Array = [];
+        private static var _autoUpdate    : Number = 0;
+        private static var _updateTimeout : Number = 0;
     }
 
     import flash.display.DisplayObjectContainer;
     import flash.display.Stage;
     import flash.events.Event;
+    import flash.utils.setTimeout;
+    import flash.utils.clearTimeout;
     import flash.errors.IllegalOperationError;
 }

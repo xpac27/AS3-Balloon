@@ -152,7 +152,7 @@ package com.xpac27.layout
             CONFIG::DEBUG { trace('  > alignChildPosition'); }
 
             var a1 : String = (horizontal) ? 'x'          : 'y';
-            var a2 : String = (horizontal) ? 'maringLeft' : 'marginTop';
+            var a2 : String = (horizontal) ? 'marginLeft' : 'marginTop';
             var a3 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
             var pos_start : Number = 0;
             for each (var entity:Entity in _entities)
