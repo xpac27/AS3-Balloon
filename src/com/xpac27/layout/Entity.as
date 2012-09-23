@@ -82,8 +82,8 @@ package com.xpac27.layout
         }
 
         // OVERRIDABLE
-        public function set width(v:Number):void  { _subject.width = v; }
-        public function set height(v:Number):void { _subject.height = v; }
+        public function set width(v:Number):void  { _subject.width = (v - v % 1); }
+        public function set height(v:Number):void { _subject.height = (v - v % 1); }
         public function get width():Number        { return _subject.width; }
         public function get height():Number       { return _subject.height; }
         public function get parent():Entity       { return _parent; }

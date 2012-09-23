@@ -23,11 +23,11 @@ package com.xpac27.layout
         }
         override public function set width(v:Number):void
         {
-            _width = v;
+            _width = (v - v % 1);
         }
         override public function set height(v:Number):void
         {
-            _height = v;
+            _height = (v - v % 1);
         }
         override public function get width():Number
         {
