@@ -25,6 +25,27 @@ package
             var b1:Box = new Box(getSprite(0xAAAAAA, 500, 200), Entity.HORIZONTAL);
             _scene.append(b1);
 
+                var e1:Entity = new Entity(getSprite(0xFFFFAA, 60, 60), Entity.LEFT);
+                e1.marginLeft = 10;
+                e1.marginRight = 10;
+                b1.append(e1);
+
+                var e2:Entity = new Entity(getSprite(0xFFAAFF, 60, 60), Entity.LEFT);
+                e2.marginLeft = 10;
+                e2.marginRight = 10;
+                b1.append(e2);
+
+                var e3:Entity = new Entity(getSprite(0xFFAAAA, 60, 60), Entity.LEFT | Entity.HFILL);
+                e3.marginLeft = 10;
+                e3.marginRight = 10;
+                b1.append(e3);
+
+                var e4:Entity = new Entity(getSprite(0xAAAAFF, 60, 60), Entity.RIGHT);
+                e4.marginLeft = 10;
+                e4.marginRight = 10;
+                b1.append(e4);
+
+/*
                 // Yellow
                 var e1:Entity = new Entity(getSprite(0xFFFFAA, 20, 60), Entity.ABSOLUTE | Entity.PRESERVE | Entity.VFILL);
                 b1.append(e1);
@@ -50,6 +71,7 @@ package
                 g1.append(e6);
 
             b1.append(g1);
+*/
         }
 
         private function getSprite(color:uint, width:Number, height:Number):Sprite

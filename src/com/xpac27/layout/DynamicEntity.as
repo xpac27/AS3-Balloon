@@ -112,19 +112,21 @@ package com.xpac27.layout
         {
             CONFIG::DEBUG { trace('  > computeFill'); }
 
-            var p:String = (horizontal) ? 'HFill' : 'VFill';
-            var a:String = (horizontal) ? 'width' : 'height';
+            var p1 : String = (horizontal) ? 'HFill'       : 'VFill';
+            var a1 : String = (horizontal) ? 'width'       : 'height';
+            var a2 : String = (horizontal) ? 'marginLeft'  : 'marginTop';
+            var a3 : String = (horizontal) ? 'marginRight' : 'marginBottom';
             var total:Number = fillTotal();
             if (total > 0)
             {
                 var value:Number = fillSpace() / total;
                 for each (var entity:Entity in _entities)
                 {
-                    if (entity[p] && entity.relative)
+                    if (entity[p1] && entity.relative)
                     {
-                        entity[a] = value;
+                        entity[a1] = value - entity[a2] - entity[a3];
 
-                        CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]); }
+                        CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]); }
                     }
                 }
             }
@@ -273,7 +275,6 @@ package com.xpac27.layout
         private function posMiddle():Number
         {
             var a1 : String = (horizontal) ? 'width'      : 'height';
-            var a2 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
             var p1 : String = (horizontal) ? 'hcenter'    : 'vcenter';
             var p2 : String = (horizontal) ? 'left'       : 'right';
             var p3 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
@@ -283,21 +284,16 @@ package com.xpac27.layout
             {
                 if (entity[p1] && entity.relative)
                 {
-                    value += entity[a2];
+                    value += entity[p3];
                 }
                 else if (entity[p2])
                 {
                     start += entity[p3];
                 }
             }
-            if ((horizontal && (HFill || contains('HFill'))) || (vertical && (VFill || contains('VFill'))))
-            {
-                return start;
-            }
-            else
-            {
-                return this[a1] / 2 - value / 2;
-            }
+            return ((horizontal && contains('HFill')) || (vertical && contains('VFill')))
+                ? start
+                : this[a1] / 2 - value / 2;
         }
 
         private function fillTotal():Number
