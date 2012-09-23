@@ -49,8 +49,6 @@ package
                 g1.append(e6);
 
             b1.append(g1);
-
-            _scene.update();
         }
 
         private function getSprite(color:uint, width:Number, height:Number):Sprite

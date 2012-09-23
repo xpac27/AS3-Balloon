@@ -17,7 +17,6 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.push(entity);
-                update();
             }
         }
 
@@ -26,7 +25,6 @@ package com.xpac27.layout
             if (entity.addTo(this))
             {
                 _entities.unshift(entity);
-                update();
             }
         }
 
@@ -40,6 +38,24 @@ package com.xpac27.layout
                     entity.update();
                 }
                 performeUpdateBT();
+            }
+        }
+
+        final override public function updateX():void
+        {
+            super.updateX();
+            for each (var entity:Entity in _entities)
+            {
+                entity.updateX();
+            }
+        }
+
+        final override public function updateY():void
+        {
+            super.updateY();
+            for each (var entity:Entity in _entities)
+            {
+                entity.updateY();
             }
         }
 

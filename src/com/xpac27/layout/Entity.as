@@ -63,12 +63,6 @@ package com.xpac27.layout
 
         public function updateAll():void
         {
-            CONFIG::DEBUG
-            {
-                trace('');
-                trace('============================');
-                trace('');
-            }
             _subject.dispatchEvent(new Event(Event.RESIZE, true));
         }
 
@@ -77,22 +71,28 @@ package com.xpac27.layout
             dispatchEvent(new EntityEvent(EntityEvent.UPDATED));
         }
 
-        // OVERRIDABLE SETTER
+        public function updateX():void
+        {
+            _subject.x = _x + _parent.rx;
+        }
+
+        public function updateY():void
+        {
+            _subject.y = _y + _parent.ry;
+        }
+
+        // OVERRIDABLE
         public function set width(v:Number):void  { _subject.width = v; }
         public function set height(v:Number):void { _subject.height = v; }
-
-        // OVERRIDABLE GETTER
         public function get width():Number        { return _subject.width; }
         public function get height():Number       { return _subject.height; }
         public function get parent():Entity       { return _parent; }
-
-        // OVERRIDABLE LOGIC
-        public function get VFill():Boolean { return 0 != (_alignement & VFILL); }
-        public function get HFill():Boolean { return 0 != (_alignement & HFILL); }
+        public function get VFill():Boolean       { return 0 != (_alignement & VFILL); }
+        public function get HFill():Boolean       { return 0 != (_alignement & HFILL); }
 
         // SETTER
-        final public function set x(v:Number):void            { _x = (v - v % 1); _subject.x = _x + _parent.rx; }
-        final public function set y(v:Number):void            { _y = (v - v % 1); _subject.y = _y + _parent.ry; }
+        final public function set x(v:Number):void            { _x = (v - v % 1); updateX(); }
+        final public function set y(v:Number):void            { _y = (v - v % 1); updateY(); }
         final public function set margins(v:Array):void       { _margins = v; }
         final public function set marginTop(v:Number):void    { _margins[0] = v; }
         final public function set marginRight(v:Number):void  { _margins[1] = v; }
