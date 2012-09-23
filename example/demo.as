@@ -41,14 +41,16 @@ package
             var g1:Group = new Group(Entity.VERTICAL);
 
                 // White
-                var e5:Entity = new Entity(getSprite(0xFFFFFF, 60, 60));
+                var e5:Entity = new Entity(getSprite(0xFFFFFF, 60, 60), Entity.VFILL);
                 g1.append(e5);
 
                 // Purple
-                var e6:Entity = new Entity(getSprite(0xFFAAFF, 60, 60));
+                var e6:Entity = new Entity(getSprite(0xFFAAFF, 60, 60), Entity.HFILL);
                 g1.append(e6);
 
             b1.append(g1);
+
+            _scene.update();
         }
 
         private function getSprite(color:uint, width:Number, height:Number):Sprite

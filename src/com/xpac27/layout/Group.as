@@ -5,33 +5,38 @@ package com.xpac27.layout
         public function Group(alignement:uint = 0x0):void
         {
             var sprite:Sprite = new Sprite();
-            sprite.graphics.beginFill(0x000000, 0.5);
-            sprite.graphics.drawRect(0, 0, 1, 1);
-            sprite.graphics.endFill();
+            //sprite.graphics.beginFill(0x000000, 0.5);
+            //sprite.graphics.drawRect(0, 0, 1, 1);
+            //sprite.graphics.endFill();
             super(this, sprite, alignement, [0, 0, 0, 0]);
 
-            if (HFill || VFill)
+            if (super.HFill || super.VFill)
             {
                 throw new ArgumentError('You cannot user FILL on a Group, it will always fit its content.');
             }
             _type = Entity.TYPE_GROUP;
         }
 
-        //override public function set width(v:Number):void  {}
-        //override public function set height(v:Number):void {}
-        //override public function set width(v:Number):void  { subject.width = v; subject.scaleX = 1 / parent.subject.scaleX; }
-        //override public function set height(v:Number):void { subject.height = v; subject.scaleY = 1 / parent.subject.scaleY; }
-
-        //override public function get VFill():Boolean
-        //{
-            //return contains('VFill');
-        //}
-        //override public function get HFill():Boolean
-        //{
-            //return contains('HFill');
-        //}
+        override public function get HFill():Boolean
+        {
+            return contains('HFill');
+        }
+        override public function get VFill():Boolean
+        {
+            return contains('VFill');
+        }
+        override public function set width(v:Number):void
+        {
+            _width = v;
+        }
+        override public function set height(v:Number):void
+        {
+            _height = v;
+        }
         override public function get width():Number
         {
+            if (HFill) return _width;
+
             var min:Number = 0;
             var max:Number = 0;
             for each (var entity:Entity in entities)
@@ -43,6 +48,8 @@ package com.xpac27.layout
         }
         override public function get height():Number
         {
+            if (VFill) return _height;
+
             var min:Number = 0;
             var max:Number = 0;
             for each (var entity:Entity in entities)
@@ -52,6 +59,9 @@ package com.xpac27.layout
             }
             return max - min;
         }
+
+        private var _width:Number = 0;
+        private var _height:Number = 0;
     }
 
     import flash.display.Sprite;

@@ -38,8 +38,8 @@ package com.xpac27.layout
         override public function set width(v:Number):void  {}
         override public function set height(v:Number):void {}
 
-        override public function get width():Number  { return subject.stage.stageWidth; }
-        override public function get height():Number { return subject.stage.stageHeight; }
+        override public function get width():Number  { return _stage ? _stage.stageWidth : 0; }
+        override public function get height():Number { return _stage ? _stage.stageHeight : 0; }
 
         static public function display(o:DisplayObjectContainer):void
         {
