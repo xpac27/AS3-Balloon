@@ -72,14 +72,14 @@ package com.xpac27.layout
         {
             CONFIG::DEBUG { trace('performeUpdateBT of ' + type); }
 
-            if ((horizontal && HFill) || (vertical && VFill))
-            {
-                alignChildPosition();
-            }
-            else
-            {
+            //if ((horizontal && (HFill || contains('HFill'))) || (vertical && (VFill || contains('VFill'))))
+            //{
+                //alignChildPosition();
+            //}
+            //else
+            //{
                 computeChildPosition();
-            }
+            //}
             setChildPosition();
         }
 
@@ -151,14 +151,24 @@ package com.xpac27.layout
         {
             CONFIG::DEBUG { trace('  > alignChildPosition'); }
 
-            var a1 : String = (horizontal) ? 'x'          : 'y';
-            var a2 : String = (horizontal) ? 'marginLeft' : 'marginTop';
-            var a3 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
+            var a1 : String = (horizontal) ? 'x'           : 'y';
+            var a2 : String = (horizontal) ? 'width'       : 'height';
+            var a3 : String = (horizontal) ? 'totalWidth'  : 'totalHeight';
+            var a4 : String = (horizontal) ? 'marginLeft'  : 'marginTop';
+            var a5 : String = (horizontal) ? 'marginRight' : 'marginBottom';
             var pos_start : Number = 0;
             for each (var entity:Entity in _entities)
             {
-                entity[a1] = pos_start + entity[a2];
-                pos_start += entity[a3];
+                if (entity.relative)
+                {
+                    entity[a1] = pos_start + entity[a4];
+                    pos_start += entity[a3];
+                }
+                else
+                {
+                    entity[a1] = pos_start + entity[a2];
+                    entity[a1] = this[a2] / 2 - entity[a2] / 2 - entity[a5] + entity[a4];
+                }
 
                 CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]); }
             }
@@ -264,15 +274,30 @@ package com.xpac27.layout
         {
             var a1 : String = (horizontal) ? 'width'      : 'height';
             var a2 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
+            var p1 : String = (horizontal) ? 'hcenter'    : 'vcenter';
+            var p2 : String = (horizontal) ? 'left'       : 'right';
+            var p3 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
             var value:Number = 0;
+            var start:Number = 0;
             for each (var entity:Entity in _entities)
             {
-                if (entity.hcenter && entity.relative)
+                if (entity[p1] && entity.relative)
                 {
                     value += entity[a2];
                 }
+                else if (entity[p2])
+                {
+                    start += entity[p3];
+                }
             }
-            return this[a1] / 2 - value / 2;
+            if ((horizontal && (HFill || contains('HFill'))) || (vertical && (VFill || contains('VFill'))))
+            {
+                return start;
+            }
+            else
+            {
+                return this[a1] / 2 - value / 2;
+            }
         }
 
         private function fillTotal():Number

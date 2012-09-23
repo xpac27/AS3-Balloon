@@ -33,6 +33,7 @@ package
                 b1.append(e2);
                 // Green
                 var e3:Entity = new Entity(getSprite(0xAAFFAA, 60, 60), Entity.TOP | Entity.LEFT);
+                e3.marginLeft = 20;
                 b1.append(e3);
                 // Blue
                 var e4:Entity = new Entity(getSprite(0xAAAAFF, 60, 60), Entity.BOTTOM | Entity.RIGHT);
