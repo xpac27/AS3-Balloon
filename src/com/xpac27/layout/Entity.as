@@ -141,6 +141,7 @@ package com.xpac27.layout
         public static const FIT        : uint = 0x0001000;
         public static const HFILL      : uint = 0x0002000;
         public static const VFILL      : uint = 0x0010000;
+        public static const FILL       : uint = 0x0012000;
         public static const NEGLECT    : uint = 0x0100000;
         public static const PRESERVE   : uint = 0x0200000;
         public static const RELATIVE   : uint = 0x1000000;

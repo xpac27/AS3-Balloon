@@ -88,7 +88,7 @@ package com.xpac27.layout
                     if (entity.aspectRatio > ratio)
                     {
                         entity.width  = width - entity.marginLeft - entity.marginRight;
-                        entity.height = entity.width * entity.aspectRatio;
+                        entity.height = entity.width / entity.aspectRatio;
                     }
                     else
                     {

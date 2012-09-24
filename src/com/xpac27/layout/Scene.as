@@ -56,10 +56,11 @@ package com.xpac27.layout
                 _stage.addChild(_displayQueue.shift());
             }
         }
-        private static var _stage         : Stage = null;
-        private static var _displayQueue  : Array = [];
-        private static var _autoUpdate    : Number = 0;
-        private static var _updateTimeout : Number = 0;
+        static private var _stage         : Stage = null;
+        static private var _displayQueue  : Array = [];
+
+        private var _autoUpdate    : Number = 0;
+        private var _updateTimeout : Number = 0;
     }
 
     import flash.display.DisplayObjectContainer;
