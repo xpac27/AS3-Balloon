@@ -49,16 +49,21 @@ package com.xpac27.layout
                 throw new ArgumentError('Sorry but preserve mode does not work with relative positioning yet :(');
             }
         }
-
-        public function addTo(entity:Entity):Boolean
+        private function addTo(entity:Entity, position:uint):Boolean
         {
-            if (_subject.parent)
-            {
-                return false;
-            }
+            if (_subject.parent) return false;
             _parent = entity;
-            Scene.display(_subject);
+            Scene.display(_subject, position);
             return true;
+        }
+
+        public function appendTo(entity:Entity):Boolean
+        {
+            return addTo(entity, Scene.FRONT);
+        }
+        public function prependTo(entity:Entity):Boolean
+        {
+            return addTo(entity, Scene.BACK);
         }
 
         public function updateAll():void

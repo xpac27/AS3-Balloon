@@ -36,7 +36,11 @@ package com.xpac27.layout
             }
         }
 
-        override public function addTo(entity:Entity):Boolean
+        override public function appendTo(entity:Entity):Boolean
+        {
+            throw new IllegalOperationError('Scene cannot be appended or prepended to anything.');
+        }
+        override public function prependTo(entity:Entity):Boolean
         {
             throw new IllegalOperationError('Scene cannot be appended or prepended to anything.');
         }
@@ -48,19 +52,26 @@ package com.xpac27.layout
         override public function get width():Number  { return _stage ? _stage.stageWidth : 0; }
         override public function get height():Number { return _stage ? _stage.stageHeight : 0; }
 
-        static public function display(o:DisplayObjectContainer):void
+        public static const FRONT : uint = 0;
+        public static const BACK  : uint = 1;
+
+        private var _autoUpdate    : Number = 0;
+        private var _updateTimeout : Number = 0;
+
+        static public function display(o:DisplayObjectContainer, position:uint):void
         {
-            _displayQueue.push(o);
-            while (_stage && _displayQueue.length)
+            switch (position)
+            {
+                case FRONT: _stage ? _stage.addChild(o) : _displayQueue.push(o); break;
+                case BACK: _stage ? _stage.addChildAt(o, 0) : _displayQueue.unshift(o); break;
+            }
+            while (_stage && _displayQueue.length > 0)
             {
                 _stage.addChild(_displayQueue.shift());
             }
         }
         static private var _stage         : Stage = null;
         static private var _displayQueue  : Array = [];
-
-        private var _autoUpdate    : Number = 0;
-        private var _updateTimeout : Number = 0;
     }
 
     import flash.display.DisplayObjectContainer;

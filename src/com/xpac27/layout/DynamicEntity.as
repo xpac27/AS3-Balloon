@@ -14,7 +14,7 @@ package com.xpac27.layout
 
         final public function append(entity:Entity):void
         {
-            if (entity.addTo(this))
+            if (entity.appendTo(this))
             {
                 _entities.push(entity);
             }
@@ -22,7 +22,7 @@ package com.xpac27.layout
 
         final public function prepend(entity:Entity):void
         {
-            if (entity.addTo(this))
+            if (entity.prependTo(this))
             {
                 _entities.unshift(entity);
             }
