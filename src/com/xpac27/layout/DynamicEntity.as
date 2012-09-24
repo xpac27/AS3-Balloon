@@ -60,6 +60,24 @@ package com.xpac27.layout
             }
         }
 
+        final override public function set alpha(v:Number):void
+        {
+            super.alpha = v;
+            for each (var entity:Entity in _entities)
+            {
+                entity.alpha = v;
+            }
+        }
+
+        final override public function set visible(v:Boolean):void
+        {
+            super.visible = v;
+            for each (var entity:Entity in _entities)
+            {
+                entity.visible = v;
+            }
+        }
+
         private function performeUpdateTB():void
         {
             CONFIG::DEBUG { trace('performeUpdateTB of ' + type); }

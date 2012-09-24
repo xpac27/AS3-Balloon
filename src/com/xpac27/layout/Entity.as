@@ -85,13 +85,17 @@ package com.xpac27.layout
         }
 
         // OVERRIDABLE
-        public function set width(v:Number):void  { _subject.width = (v - v % 1); }
-        public function set height(v:Number):void { _subject.height = (v - v % 1); }
-        public function get width():Number        { return _subject.width; }
-        public function get height():Number       { return _subject.height; }
-        public function get parent():Entity       { return _parent; }
-        public function get VFill():Boolean       { return 0 != (_alignement & VFILL); }
-        public function get HFill():Boolean       { return 0 != (_alignement & HFILL); }
+        public function set width(v:Number):void    { _subject.width = (v - v % 1); }
+        public function set height(v:Number):void   { _subject.height = (v - v % 1); }
+        public function set alpha(v:Number):void    { _subject.alpha = v; }
+        public function set visible(v:Boolean):void { _subject.visible = v; }
+        public function get width():Number          { return _subject.width; }
+        public function get height():Number         { return _subject.height; }
+        public function get parent():Entity         { return _parent; }
+        public function get VFill():Boolean         { return 0 != (_alignement & VFILL); }
+        public function get HFill():Boolean         { return 0 != (_alignement & HFILL); }
+        public function get alpha():Number          { return _subject.alpha; }
+        public function get visible():Boolean       { return _subject.visible; }
 
         // SETTER
         final public function set x(v:Number):void            { _x = (v - v % 1); updateX(); }
