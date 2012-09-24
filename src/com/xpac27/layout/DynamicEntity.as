@@ -38,6 +38,7 @@ package com.xpac27.layout
                     entity.update();
                 }
                 performeUpdateBT();
+                finishUpdate();
             }
         }
 
@@ -260,6 +261,14 @@ package com.xpac27.layout
             return ((horizontal && contains('HFill')) || (vertical && contains('VFill')))
                 ? start
                 : this[a1] / 2 - value / 2;
+        }
+
+        final private function finishUpdate():void
+        {
+            for each (var entity:Entity in _entities)
+            {
+                entity.afterUpdate();
+            }
         }
 
         private function fillTotal():Number

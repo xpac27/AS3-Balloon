@@ -66,21 +66,19 @@ package com.xpac27.layout
             return addTo(entity, Scene.BACK);
         }
 
+        public function update():void {}
         public function updateAll():void
         {
             _subject.dispatchEvent(new Event(Event.RESIZE, true));
         }
-
-        public function update():void
+        public function afterUpdate():void
         {
             dispatchEvent(new EntityEvent(EntityEvent.UPDATED));
         }
-
         public function updateX():void
         {
             _subject.x = _x + _parent.rx;
         }
-
         public function updateY():void
         {
             _subject.y = _y + _parent.ry;
