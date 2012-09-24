@@ -47,7 +47,7 @@ package com.xpac27.layout
             super.updateX();
             for each (var entity:Entity in _entities)
             {
-                entity.updateX();
+                if (entity.visible) entity.updateX();
             }
         }
 
@@ -56,7 +56,7 @@ package com.xpac27.layout
             super.updateY();
             for each (var entity:Entity in _entities)
             {
-                entity.updateY();
+                if (entity.visible) entity.updateY();
             }
         }
 
@@ -102,7 +102,7 @@ package com.xpac27.layout
             var ratio:Number = width / height;
             for each (var entity:Entity in _entities)
             {
-                if (entity.preserve && entity.absolute && (entity.VFill || entity.HFill))
+                if (entity.visible && entity.preserve && entity.absolute && (entity.VFill || entity.HFill))
                 {
                     if (entity.aspectRatio > ratio)
                     {
@@ -134,7 +134,7 @@ package com.xpac27.layout
                 var value:Number = fillSpace() / total;
                 for each (var entity:Entity in _entities)
                 {
-                    if (entity[p1])
+                    if (entity.visible && entity[p1])
                     {
                         entity[a1] = value - entity[a2] - entity[a3];
 
@@ -152,7 +152,7 @@ package com.xpac27.layout
             var p:String = (horizontal) ? 'VFill'  : 'HFill';
             for each (var entity:Entity in _entities)
             {
-                if (entity[p] && entity.neglect)
+                if (entity.visible && entity[p] && entity.neglect)
                 {
                     entity[a] = this[a];
 
@@ -175,23 +175,26 @@ package com.xpac27.layout
             var info:String = '';
             for each (var entity:Entity in _entities)
             {
-                if (entity[p1])
+                if (entity.visible)
                 {
-                    entity[a1] = this[a2] / 2 - entity[a2] / 2 - entity[a3] + entity[a4];
-                    info = p1;
-                }
-                else if (entity[p2])
-                {
-                    entity[a1] = entity[a4];
-                    info = p2;
-                }
-                else if (entity[p3])
-                {
-                    entity[a1] = this[a2] - entity[a2] - entity[a3];
-                    info = p3;
-                }
+                    if (entity[p1])
+                    {
+                        entity[a1] = this[a2] / 2 - entity[a2] / 2 - entity[a3] + entity[a4];
+                        info = p1;
+                    }
+                    else if (entity[p2])
+                    {
+                        entity[a1] = entity[a4];
+                        info = p2;
+                    }
+                    else if (entity[p3])
+                    {
+                        entity[a1] = this[a2] - entity[a2] - entity[a3];
+                        info = p3;
+                    }
 
-                CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')'); }
+                    CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')'); }
+                }
             }
         }
 
@@ -213,47 +216,50 @@ package com.xpac27.layout
             var pos_end    : Number = this[a5];
             for each (var entity:Entity in _entities)
             {
-                if (entity[p1])
+                if (entity.visible)
                 {
-                    if (entity.relative)
+                    if (entity[p1])
                     {
-                        entity[a1] = pos_start + entity[a2];
-                        pos_start += entity[a3];
+                        if (entity.relative)
+                        {
+                            entity[a1] = pos_start + entity[a2];
+                            pos_start += entity[a3];
+                        }
+                        else if (entity.absolute)
+                        {
+                            entity[a1] = entity[a2];
+                        }
+                        info = 'left';
                     }
-                    else if (entity.absolute)
+                    else if (entity[p2])
                     {
-                        entity[a1] = entity[a2];
+                        if (entity.relative)
+                        {
+                            entity[a1] = pos_middle + entity[a2];
+                            pos_middle += entity[a3];
+                        }
+                        else if (entity.absolute)
+                        {
+                            entity[a1] = this[a5] / 2 - entity[a5] / 2 + entity[a2] - entity[a4];
+                        }
+                        info = 'hcenter';
                     }
-                    info = 'left';
-                }
-                else if (entity[p2])
-                {
-                    if (entity.relative)
+                    else if (entity[p3])
                     {
-                        entity[a1] = pos_middle + entity[a2];
-                        pos_middle += entity[a3];
+                        if (entity.relative)
+                        {
+                            pos_end -= entity[a3];
+                            entity[a1] = pos_end + entity[a2];
+                        }
+                        else if (entity.absolute)
+                        {
+                            entity[a1] = this[a5] - entity[a5] - entity[a4];
+                        }
+                        info = 'right';
                     }
-                    else if (entity.absolute)
-                    {
-                        entity[a1] = this[a5] / 2 - entity[a5] / 2 + entity[a2] - entity[a4];
-                    }
-                    info = 'hcenter';
-                }
-                else if (entity[p3])
-                {
-                    if (entity.relative)
-                    {
-                        pos_end -= entity[a3];
-                        entity[a1] = pos_end + entity[a2];
-                    }
-                    else if (entity.absolute)
-                    {
-                        entity[a1] = this[a5] - entity[a5] - entity[a4];
-                    }
-                    info = 'right';
-                }
 
-                CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')'); }
+                    CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1] + ' (' + info + ')'); }
+                }
             }
         }
 
@@ -267,13 +273,16 @@ package com.xpac27.layout
             var start:Number = 0;
             for each (var entity:Entity in _entities)
             {
-                if (entity[p1] && entity.relative)
+                if (entity.visible)
                 {
-                    value += entity[p3];
-                }
-                else if (entity[p2])
-                {
-                    start += entity[p3];
+                    if (entity[p1] && entity.relative)
+                    {
+                        value += entity[p3];
+                    }
+                    else if (entity[p2])
+                    {
+                        start += entity[p3];
+                    }
                 }
             }
             return ((horizontal && contains('HFill')) || (vertical && contains('VFill')))
@@ -295,7 +304,7 @@ package com.xpac27.layout
             var total:Number = 0;
             for each (var entity:Entity in _entities)
             {
-                if (entity[p] && entity.neglect) total ++;
+                if (entity.visible && entity[p] && entity.neglect) total ++;
             }
             return total;
         }
@@ -307,7 +316,7 @@ package com.xpac27.layout
             var space:Number = (horizontal) ? width : height;
             for each (var entity:Entity in _entities)
             {
-                if (!entity[p] && entity.relative) space -= entity[a];
+                if (entity.visible && !entity[p] && entity.relative) space -= entity[a];
             }
             return space;
         }
@@ -316,7 +325,7 @@ package com.xpac27.layout
         {
             for each (var entity:Entity in _entities)
             {
-                if (entity[a]) return true;
+                if (entity.visible && entity[a]) return true;
             }
             return false;
         }
