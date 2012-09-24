@@ -2,7 +2,7 @@ package com.xpac27.layout
 {
     public class DynamicEntity extends Entity
     {
-        public function DynamicEntity(self:Entity, subject:DisplayObjectContainer, alignement:uint, margins:Array):void
+        public function DynamicEntity(self:Entity, subject:DisplayObject, alignement:uint, margins:Array):void
         {
             super(subject, alignement, margins);
 
@@ -302,6 +302,6 @@ package com.xpac27.layout
         private var _entities:Array = [];
     }
 
-    import flash.display.DisplayObjectContainer;
+    import flash.display.DisplayObject;
     import flash.errors.IllegalOperationError;
 }

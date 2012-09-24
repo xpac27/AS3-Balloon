@@ -2,7 +2,7 @@ package com.xpac27.layout
 {
     public class Entity extends EventDispatcher
     {
-        public function Entity(subject:DisplayObjectContainer, alignement:uint = 0x0, margins:Array = null):void
+        public function Entity(subject:DisplayObject, alignement:uint = 0x0, margins:Array = null):void
         {
             _subject = subject;
             _alignement = alignement;
@@ -158,7 +158,7 @@ package com.xpac27.layout
         public static const TYPE_BOX    : String = 'Box';
 
         private var _alignement:uint = Entity.HORIZONTAL;
-        private var _subject:DisplayObjectContainer;
+        private var _subject:DisplayObject;
         private var _parent:Entity;
         private var _margins:Array;
         private var _aspectRatio:Number;
@@ -168,7 +168,7 @@ package com.xpac27.layout
         protected var _type:String = TYPE_ENTITY;
     }
 
-    import flash.display.DisplayObjectContainer;
+    import flash.display.DisplayObject;
     import flash.events.EventDispatcher;
     import flash.events.Event;
 

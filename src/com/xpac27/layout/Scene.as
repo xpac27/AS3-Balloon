@@ -58,7 +58,7 @@ package com.xpac27.layout
         private var _autoUpdate    : Number = 0;
         private var _updateTimeout : Number = 0;
 
-        static public function display(o:DisplayObjectContainer, position:uint):void
+        static public function display(o:DisplayObject, position:uint):void
         {
             switch (position)
             {
@@ -74,7 +74,7 @@ package com.xpac27.layout
         static private var _displayQueue  : Array = [];
     }
 
-    import flash.display.DisplayObjectContainer;
+    import flash.display.DisplayObject;
     import flash.display.Stage;
     import flash.events.Event;
     import flash.utils.setTimeout;

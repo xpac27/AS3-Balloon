@@ -2,7 +2,7 @@ package com.xpac27.layout
 {
     public class Box extends DynamicEntity
     {
-        public function Box(subject:DisplayObjectContainer, alignement:uint = 0x0, margins:Array = null):void
+        public function Box(subject:DisplayObject, alignement:uint = 0x0, margins:Array = null):void
         {
             super(this, subject, alignement, margins);
 
@@ -18,7 +18,7 @@ package com.xpac27.layout
     }
 
     import flash.display.Sprite;
-    import flash.display.DisplayObjectContainer;
+    import flash.display.DisplayObject;
 
     import com.xpac27.layout.Entity;
     import com.xpac27.layout.DynamicEntity;
