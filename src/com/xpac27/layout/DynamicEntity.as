@@ -136,8 +136,14 @@ package com.xpac27.layout
                 {
                     if (entity[p1])
                     {
-                        entity[a1] = value - entity[a2] - entity[a3];
-
+                        if (entity.absolute)
+                        {
+                            entity[a1] = this[a1];
+                        }
+                        else
+                        {
+                            entity[a1] = value - entity[a2] - entity[a3];
+                        }
                         CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]); }
                     }
                 }
@@ -156,7 +162,7 @@ package com.xpac27.layout
                 {
                     entity[a] = this[a];
 
-                    CONFIG::DEBUG { trace('    > ' + entity.type + '.height set to ' + entity[a]); }
+                    CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]); }
                 }
             }
         }
@@ -295,7 +301,7 @@ package com.xpac27.layout
             var total:Number = 0;
             for each (var entity:Entity in _entities)
             {
-                if (entity[p] && entity.neglect) total ++;
+                if (entity[p] && entity.neglect && !entity.absolute) total ++;
             }
             return total;
         }
@@ -307,7 +313,7 @@ package com.xpac27.layout
             var space:Number = (horizontal) ? width : height;
             for each (var entity:Entity in _entities)
             {
-                if (!entity[p] && entity.relative) space -= entity[a];
+                if (!entity[p] && entity.relative && !entity.absolute) space -= entity[a];
             }
             return space;
         }
