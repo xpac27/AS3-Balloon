@@ -154,16 +154,24 @@ package com.xpac27.layout
         {
             CONFIG::DEBUG { trace('  > setFill'); }
 
-            var a:String = (horizontal) ? 'height' : 'width';
-            var p:String = (horizontal) ? 'VFill'  : 'HFill';
+            var a1:String = (horizontal) ? 'height' : 'width';
+            var a2:String = (horizontal) ? 'width'  : 'height';
+            var p1:String = (horizontal) ? 'VFill'  : 'HFill';
+            var p2:String = (horizontal) ? 'HFill'  : 'VFill';
             for each (var entity:Entity in _entities)
             {
-                if (entity[p] && entity.neglect)
+                if (entity.neglect)
                 {
-                    entity[a] = this[a];
-
-                    CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a + ' set to ' + entity[a]); }
+                    if (entity.absolute && entity[p2])
+                    {
+                        entity[a2] = this[a2];
+                    }
+                    if (entity[p1])
+                    {
+                        entity[a1] = this[a1];
+                    }
                 }
+                CONFIG::DEBUG { trace('    > ' + entity.type + '.' + a1 + ' set to ' + entity[a1]); }
             }
         }
 
