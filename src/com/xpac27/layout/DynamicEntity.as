@@ -83,8 +83,8 @@ package com.xpac27.layout
             CONFIG::DEBUG { trace('performeUpdateTB of ' + type); }
 
             computePreserve();
-            computeFill();
-            setFill();
+            computeFit();
+            setFit();
         }
 
         private function performeUpdateBT():void
@@ -102,7 +102,7 @@ package com.xpac27.layout
             var ratio:Number = width / height;
             for each (var entity:Entity in _entities)
             {
-                if (entity.preserve && entity.absolute && (entity.VFill || entity.HFill))
+                if (entity.preserve && entity.absolute && (entity.VFit || entity.HFit))
                 {
                     if (entity.aspectRatio > ratio)
                     {
@@ -120,18 +120,18 @@ package com.xpac27.layout
             }
         }
 
-        private function computeFill():void
+        private function computeFit():void
         {
-            CONFIG::DEBUG { trace('  > computeFill'); }
+            CONFIG::DEBUG { trace('  > computeFit'); }
 
-            var p1 : String = (horizontal) ? 'HFill'       : 'VFill';
+            var p1 : String = (horizontal) ? 'HFit'        : 'VFit';
             var a1 : String = (horizontal) ? 'width'       : 'height';
             var a2 : String = (horizontal) ? 'marginLeft'  : 'marginTop';
             var a3 : String = (horizontal) ? 'marginRight' : 'marginBottom';
-            var total:Number = fillTotal();
+            var total:Number = fitTotal();
             if (total > 0)
             {
-                var value:Number = fillSpace() / total;
+                var value:Number = fitSpace() / total;
                 for each (var entity:Entity in _entities)
                 {
                     if (entity[p1])
@@ -150,14 +150,14 @@ package com.xpac27.layout
             }
         }
 
-        private function setFill():void
+        private function setFit():void
         {
-            CONFIG::DEBUG { trace('  > setFill'); }
+            CONFIG::DEBUG { trace('  > setFit'); }
 
             var a1:String = (horizontal) ? 'height' : 'width';
             var a2:String = (horizontal) ? 'width'  : 'height';
-            var p1:String = (horizontal) ? 'VFill'  : 'HFill';
-            var p2:String = (horizontal) ? 'HFill'  : 'VFill';
+            var p1:String = (horizontal) ? 'VFit'   : 'HFit';
+            var p2:String = (horizontal) ? 'HFit'   : 'VFit';
             for each (var entity:Entity in _entities)
             {
                 if (entity.neglect)
@@ -290,7 +290,7 @@ package com.xpac27.layout
                     start += entity[p3];
                 }
             }
-            return ((horizontal && contains('HFill')) || (vertical && contains('VFill')))
+            return ((horizontal && contains('HFit')) || (vertical && contains('VFit')))
                 ? start
                 : this[a1] / 2 - value / 2;
         }
@@ -303,9 +303,9 @@ package com.xpac27.layout
             }
         }
 
-        private function fillTotal():Number
+        private function fitTotal():Number
         {
-            var p:String = (horizontal) ? 'HFill' : 'VFill';
+            var p:String = (horizontal) ? 'HFit' : 'VFit';
             var total:Number = 0;
             for each (var entity:Entity in _entities)
             {
@@ -314,9 +314,9 @@ package com.xpac27.layout
             return total;
         }
 
-        private function fillSpace():Number
+        private function fitSpace():Number
         {
-            var p : String = (horizontal) ? 'HFill'      : 'VFill';
+            var p : String = (horizontal) ? 'HFit'       : 'VFit';
             var a : String = (horizontal) ? 'totalWidth' : 'totalHeight';
             var space:Number = (horizontal) ? width : height;
             for each (var entity:Entity in _entities)

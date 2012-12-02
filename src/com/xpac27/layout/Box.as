@@ -6,9 +6,9 @@ package com.xpac27.layout
         {
             super(this, subject, alignement, margins);
 
-            if (HFill || VFill)
+            if (HFit || VFit)
             {
-                throw new ArgumentError('Boxes must have a fixed size, you cannot use FILL on a Box.');
+                throw new ArgumentError('Boxes must have a fixed size, you cannot use FIT on a Box.');
             }
             _type = Entity.TYPE_BOX;
         }

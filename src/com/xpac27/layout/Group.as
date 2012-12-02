@@ -6,20 +6,20 @@ package com.xpac27.layout
         {
             super(this, new Sprite(), alignement, [0, 0, 0, 0]);
 
-            if (super.HFill || super.VFill)
+            if (super.HFit || super.VFit)
             {
-                throw new ArgumentError('You cannot user FILL on a Group, it will always fit its content.');
+                throw new ArgumentError('You cannot user FIT on a Group, it will always fit its content.');
             }
             _type = Entity.TYPE_GROUP;
         }
 
-        override public function get HFill():Boolean
+        override public function get HFit():Boolean
         {
-            return contains('HFill');
+            return contains('HFit');
         }
-        override public function get VFill():Boolean
+        override public function get VFit():Boolean
         {
-            return contains('VFill');
+            return contains('VFit');
         }
         override public function set width(v:Number):void
         {
@@ -31,7 +31,7 @@ package com.xpac27.layout
         }
         override public function get width():Number
         {
-            if (HFill) return _width;
+            if (HFit) return _width;
 
             var min:Number = 0;
             var max:Number = 0;
@@ -44,7 +44,7 @@ package com.xpac27.layout
         }
         override public function get height():Number
         {
-            if (VFill) return _height;
+            if (VFit) return _height;
 
             var min:Number = 0;
             var max:Number = 0;

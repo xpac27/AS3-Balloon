@@ -6,9 +6,9 @@ package com.xpac27.layout
         {
             super(this, subject, alignement, [0, 0, 0, 0]);
 
-            if (HFill || VFill)
+            if (HFit || VFit)
             {
-                throw new ArgumentError('You cannot user FILL on a Scene, it will always fit to the stage.');
+                throw new ArgumentError('You cannot user FIT on a Scene, it will always fit to the stage.');
             }
             else if (preserve)
             {
