@@ -44,13 +44,18 @@ package com.xpac27.layout
         {
             throw new IllegalOperationError('Scene cannot be appended or prepended to anything.');
         }
+        override public function destroy():void
+        {
+            _stage.removeEventListener(Event.RESIZE, onSubjectResize);
+            destroyChildren();
+        }
 
         override public function set width(v:Number):void  {}
         override public function set height(v:Number):void {}
 
         override public function get parent():Entity { return this; }
         override public function get width():Number  { return _stage ? _stage.stageWidth : 0; }
-        override public function get height():Number { trace(_stage ? _stage.stageHeight: -1); return _stage ? _stage.stageHeight : 0; }
+        override public function get height():Number { return _stage ? _stage.stageHeight : 0; }
 
         public static const FRONT : uint = 0;
         public static const BACK  : uint = 1;
@@ -68,6 +73,18 @@ package com.xpac27.layout
             while (_stage && _displayQueue.length > 0)
             {
                 _stage.addChild(_displayQueue.shift());
+            }
+        }
+        static public function remove(o:DisplayObject):void
+        {
+            if (_stage.contains(o))
+            {
+                _stage.removeChild(o);
+            }
+            var i:int = _displayQueue.indexOf(o);
+            if (i != -1)
+            {
+                // TODO
             }
         }
         static private var _stage         : Stage = null;

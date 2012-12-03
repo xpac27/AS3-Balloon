@@ -8,6 +8,7 @@ package com.xpac27.layout
             _alignement = alignement;
             _margins = (margins ||= [0, 0, 0, 0]);
             _aspectRatio = width / height;
+            _children = [];
 
             checkAlignement();
         }
@@ -56,10 +57,19 @@ package com.xpac27.layout
         }
         private function addTo(entity:Entity, position:uint):Boolean
         {
-            if (_subject.parent) return false;
+            if (_subject.parent || _parent) return false;
             _parent = entity;
+            entity.addChild(this);
             Scene.display(_subject, position);
             return true;
+        }
+
+        protected function destroyChildren():void
+        {
+            for each (var entity:Entity in _children)
+            {
+                entity.destroy();
+            }
         }
 
         public function appendTo(entity:Entity):Boolean
@@ -70,7 +80,10 @@ package com.xpac27.layout
         {
             return addTo(entity, Scene.BACK);
         }
-
+        public function addChild(entity:Entity):void
+        {
+            _children.push(entity);
+        }
         public function update():void {}
         public function updateAll():void
         {
@@ -87,6 +100,11 @@ package com.xpac27.layout
         public function updateY():void
         {
             _subject.y = _y + _parent.ry;
+        }
+        public function destroy():void
+        {
+            Scene.remove(_subject);
+            destroyChildren();
         }
 
         // OVERRIDABLE
@@ -177,6 +195,7 @@ package com.xpac27.layout
         private var _alignement:uint = Entity.HORIZONTAL;
         private var _subject:DisplayObject;
         private var _parent:Entity;
+        private var _children:Array;
         private var _margins:Array;
         private var _aspectRatio:Number;
         private var _x:Number = 0;
