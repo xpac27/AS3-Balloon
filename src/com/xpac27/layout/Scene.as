@@ -50,7 +50,7 @@ package com.xpac27.layout
 
         override public function get parent():Entity { return this; }
         override public function get width():Number  { return _stage ? _stage.stageWidth : 0; }
-        override public function get height():Number { return _stage ? _stage.stageHeight : 0; }
+        override public function get height():Number { trace(_stage ? _stage.stageHeight: -1); return _stage ? _stage.stageHeight : 0; }
 
         public static const FRONT : uint = 0;
         public static const BACK  : uint = 1;

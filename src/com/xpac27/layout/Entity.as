@@ -29,7 +29,7 @@ package com.xpac27.layout
                 _alignement = _alignement | HCENTER;
             }
 
-            if ((_alignement & FIX) + (_alignement & HFIT) + (_alignement & VFIT) == 0)
+            if ((_alignement & FIX) + (_alignement & HFIT) + (_alignement & VFIT) + (_alignement & HFILL) + (_alignement & VFILL) == 0)
             {
                 _alignement = _alignement | FIX;
             }
@@ -47,6 +47,11 @@ package com.xpac27.layout
             if (preserve && relative)
             {
                 throw new ArgumentError('Sorry but preserve mode does not work with relative positioning yet :(');
+            }
+
+            if (fill && relative)
+            {
+                throw new ArgumentError('Sorry but fill mode does not work with relative positioning yet :(');
             }
         }
         private function addTo(entity:Entity, position:uint):Boolean
@@ -94,6 +99,8 @@ package com.xpac27.layout
         public function get parent():Entity         { return _parent; }
         public function get VFit():Boolean          { return 0 != (_alignement & VFIT); }
         public function get HFit():Boolean          { return 0 != (_alignement & HFIT); }
+        public function get VFill():Boolean         { return 0 != (_alignement & VFILL); }
+        public function get HFill():Boolean         { return 0 != (_alignement & HFILL); }
         public function get alpha():Number          { return _subject.alpha; }
         public function get visible():Boolean       { return _subject.visible; }
 
@@ -132,6 +139,7 @@ package com.xpac27.layout
         final public function get right():Boolean      { return 0 != (_alignement & RIGHT); }
         final public function get hcenter():Boolean    { return 0 != (_alignement & HCENTER); }
         final public function get fix():Boolean        { return 0 != (_alignement & FIX); }
+        final public function get fill():Boolean       { return 0 != (_alignement & FILL); }
         final public function get neglect():Boolean    { return 0 != (_alignement & NEGLECT); }
         final public function get preserve():Boolean   { return 0 != (_alignement & PRESERVE); }
         final public function get relative():Boolean   { return 0 != (_alignement & RELATIVE); }
@@ -145,10 +153,17 @@ package com.xpac27.layout
         public static const LEFT       : uint = 0x0000100;
         public static const RIGHT      : uint = 0x0000200;
         public static const HCENTER    : uint = 0x0000400;
+
         public static const FIX        : uint = 0x0001000;
+
         public static const HFIT       : uint = 0x0002000;
         public static const VFIT       : uint = 0x0010000;
         public static const FIT        : uint = 0x0012000;
+
+        public static const HFILL      : uint = 0x0004000;
+        public static const VFILL      : uint = 0x0020000;
+        public static const FILL       : uint = 0x0024000;
+
         public static const NEGLECT    : uint = 0x0100000;
         public static const PRESERVE   : uint = 0x0200000;
         public static const RELATIVE   : uint = 0x1000000;

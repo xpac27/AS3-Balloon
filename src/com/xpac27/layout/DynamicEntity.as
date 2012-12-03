@@ -102,17 +102,33 @@ package com.xpac27.layout
             var ratio:Number = width / height;
             for each (var entity:Entity in _entities)
             {
-                if (entity.preserve && entity.absolute && (entity.VFit || entity.HFit))
+                if (entity.preserve && entity.absolute && (entity.HFit || entity.VFit || entity.HFill || entity.VFill))
                 {
-                    if (entity.aspectRatio > ratio)
+                    if (entity.HFit || entity.VFit)
                     {
-                        entity.width  = width - entity.marginLeft - entity.marginRight;
-                        entity.height = entity.width / entity.aspectRatio;
+                        if (entity.aspectRatio > ratio)
+                        {
+                            entity.width  = width - entity.marginLeft - entity.marginRight;
+                            entity.height = entity.width / entity.aspectRatio;
+                        }
+                        else
+                        {
+                            entity.height = height - entity.marginTop - entity.marginBottom;
+                            entity.width  = entity.height * entity.aspectRatio;
+                        }
                     }
-                    else
+                    if (entity.HFill || entity.VFill)
                     {
-                        entity.height = height - entity.marginTop - entity.marginBottom;
-                        entity.width  = entity.height * entity.aspectRatio;
+                        if (entity.aspectRatio < ratio)
+                        {
+                            entity.width  = width - entity.marginLeft - entity.marginRight;
+                            entity.height = entity.width / entity.aspectRatio;
+                        }
+                        else
+                        {
+                            entity.height = height - entity.marginTop - entity.marginBottom;
+                            entity.width  = entity.height * entity.aspectRatio;
+                        }
                     }
 
                     CONFIG::DEBUG { trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height); }
