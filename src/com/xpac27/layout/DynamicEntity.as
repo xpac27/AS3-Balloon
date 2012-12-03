@@ -297,13 +297,16 @@ package com.xpac27.layout
             var start:Number = 0;
             for each (var entity:Entity in _entities)
             {
-                if (entity[p1] && entity.relative)
+                if (!entity.absolute)
                 {
-                    value += entity[p3];
-                }
-                else if (entity[p2])
-                {
-                    start += entity[p3];
+                    if (entity[p1] && entity.relative)
+                    {
+                        value += entity[p3];
+                    }
+                    else if (entity[p2])
+                    {
+                        start += entity[p3];
+                    }
                 }
             }
             return ((horizontal && contains('HFit')) || (vertical && contains('VFit')))
