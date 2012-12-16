@@ -104,18 +104,21 @@ package com.xpac27.layout
             {
                 if (entity.preserve && entity.absolute && (entity.VFill || entity.HFill))
                 {
-                    if (entity.aspectRatio > ratio)
+                    if (entity.aspectRatio != 0)
                     {
-                        entity.width  = width - entity.marginLeft - entity.marginRight;
-                        entity.height = entity.width / entity.aspectRatio;
-                    }
-                    else
-                    {
-                        entity.height = height - entity.marginTop - entity.marginBottom;
-                        entity.width  = entity.height * entity.aspectRatio;
-                    }
+                        if (entity.aspectRatio > ratio)
+                        {
+                            entity.width  = width - entity.marginLeft - entity.marginRight;
+                            entity.height = entity.width / entity.aspectRatio;
+                        }
+                        else
+                        {
+                            entity.height = height - entity.marginTop - entity.marginBottom;
+                            entity.width  = entity.height * entity.aspectRatio;
+                        }
 
-                    CONFIG::DEBUG { trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height); }
+                        CONFIG::DEBUG { trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height); }
+                    }
                 }
             }
         }
