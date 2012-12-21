@@ -7,7 +7,6 @@ package com.xpac27.layout
             _subject = subject;
             _alignement = alignement;
             _margins = (margins ||= [0, 0, 0, 0]);
-            _aspectRatio = width / height;
             _children = [];
 
             checkAlignement();
@@ -106,6 +105,18 @@ package com.xpac27.layout
             Scene.remove(_subject);
             destroyChildren();
         }
+        public function get aspectRatio():Number
+        {
+            if (width == 0 || height == 0)
+            {
+                return 0;
+            }
+            else if (_aspectRatio == 0)
+            {
+                _aspectRatio = width / height;
+            }
+            return _aspectRatio;
+        }
 
         // OVERRIDABLE
         public function set width(v:Number):void    { _subject.width = (v - v % 1); }
@@ -143,7 +154,6 @@ package com.xpac27.layout
         final public function get marginBottom():Number { return _margins[2]; }
         final public function get marginLeft():Number   { return _margins[3]; }
         final public function get type():String         { return _type; }
-        final public function get aspectRatio():Number  { return _aspectRatio; }
         final public function get totalWidth():Number   { return width + _margins[1] + _margins[3]; }
         final public function get totalHeight():Number  { return height + _margins[0] + _margins[2]; }
 
@@ -197,7 +207,7 @@ package com.xpac27.layout
         private var _parent:Entity;
         private var _children:Array;
         private var _margins:Array;
-        private var _aspectRatio:Number;
+        private var _aspectRatio:Number = 0;
         private var _x:Number = 0;
         private var _y:Number = 0;
 

@@ -102,7 +102,7 @@ package com.xpac27.layout
             var ratio:Number = width / height;
             for each (var entity:Entity in _entities)
             {
-                if (entity.preserve && entity.absolute && (entity.HFit || entity.VFit || entity.HFill || entity.VFill))
+                if (entity.preserve && entity.aspectRatio != 0 && entity.absolute && (entity.HFit || entity.VFit || entity.HFill || entity.VFill))
                 {
                     if (entity.HFit || entity.VFit)
                     {
@@ -130,7 +130,6 @@ package com.xpac27.layout
                             entity.width  = entity.height * entity.aspectRatio;
                         }
                     }
-
                     CONFIG::DEBUG { trace('    > ' + entity.type + ' width set to ' + entity.width + ', height set to ' + entity.height); }
                 }
             }
