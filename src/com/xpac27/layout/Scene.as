@@ -50,12 +50,16 @@ package com.xpac27.layout
             destroyChildren();
         }
 
-        override public function set width(v:Number):void  {}
-        override public function set height(v:Number):void {}
+        override public function set width(v:Number):void    {}
+        override public function set height(v:Number):void   {}
+        override public function set alpha(v:Number):void    {}
+        override public function set visible(v:Boolean):void {}
 
-        override public function get parent():Entity { return this; }
-        override public function get width():Number  { return _stage ? _stage.stageWidth : 0; }
-        override public function get height():Number { return _stage ? _stage.stageHeight : 0; }
+        override public function get parent():Entity   { return this; }
+        override public function get width():Number    { return _stage ? _stage.stageWidth : 0; }
+        override public function get height():Number   { return _stage ? _stage.stageHeight : 0; }
+        override public function get alpha():Number    { return 1; }
+        override public function get visible():Boolean { return true; }
 
         public static const FRONT : uint = 0;
         public static const BACK  : uint = 1;

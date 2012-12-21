@@ -60,7 +60,7 @@ package com.xpac27.layout
             }
         }
 
-        final override public function set alpha(v:Number):void
+        override public function set alpha(v:Number):void
         {
             super.alpha = v;
             for each (var entity:Entity in _entities)
@@ -69,7 +69,7 @@ package com.xpac27.layout
             }
         }
 
-        final override public function set visible(v:Boolean):void
+        override public function set visible(v:Boolean):void
         {
             super.visible = v;
             for each (var entity:Entity in _entities)
