@@ -30,10 +30,10 @@ package com.xpac27.layout
 
         final override public function update():void
         {
-            if (_entities.length > 0 && parent)
+            if (entities.length > 0 && parent)
             {
                 performeUpdateTB();
-                for each (var entity:Entity in _entities)
+                for each (var entity:Entity in entities)
                 {
                     entity.update();
                 }
@@ -45,7 +45,7 @@ package com.xpac27.layout
         final override public function updateX():void
         {
             super.updateX();
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 entity.updateX();
             }
@@ -54,27 +54,9 @@ package com.xpac27.layout
         final override public function updateY():void
         {
             super.updateY();
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 entity.updateY();
-            }
-        }
-
-        override public function set alpha(v:Number):void
-        {
-            super.alpha = v;
-            for each (var entity:Entity in _entities)
-            {
-                entity.alpha = v;
-            }
-        }
-
-        override public function set visible(v:Boolean):void
-        {
-            super.visible = v;
-            for each (var entity:Entity in _entities)
-            {
-                entity.visible = v;
             }
         }
 
@@ -100,7 +82,7 @@ package com.xpac27.layout
             CONFIG::DEBUG { trace('  > computePreserve'); }
 
             var ratio:Number = width / height;
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (entity.preserve && entity.aspectRatio != 0 && entity.absolute && (entity.HFit || entity.VFit || entity.HFill || entity.VFill))
                 {
@@ -147,7 +129,7 @@ package com.xpac27.layout
             if (total > 0)
             {
                 var value:Number = fitSpace() / total;
-                for each (var entity:Entity in _entities)
+                for each (var entity:Entity in entities)
                 {
                     if (entity[p1])
                     {
@@ -173,7 +155,7 @@ package com.xpac27.layout
             var a2:String = (horizontal) ? 'width'  : 'height';
             var p1:String = (horizontal) ? 'VFit'   : 'HFit';
             var p2:String = (horizontal) ? 'HFit'   : 'VFit';
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (entity.neglect)
                 {
@@ -202,7 +184,7 @@ package com.xpac27.layout
             var a3 : String = (horizontal) ? 'marginBottom' : 'marginRight';
             var a4 : String = (horizontal) ? 'marginTop'    : 'marginLeft';
             var info:String = '';
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (entity[p1])
                 {
@@ -240,7 +222,7 @@ package com.xpac27.layout
             var pos_start  : Number = 0;
             var pos_middle : Number = posMiddle();
             var pos_end    : Number = this[a5];
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (entity[p1])
                 {
@@ -294,7 +276,7 @@ package com.xpac27.layout
             var p3 : String = (horizontal) ? 'totalWidth' : 'totalHeight';
             var value:Number = 0;
             var start:Number = 0;
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (!entity.absolute)
                 {
@@ -315,7 +297,7 @@ package com.xpac27.layout
 
         final private function finishUpdate():void
         {
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 entity.afterUpdate();
             }
@@ -325,7 +307,7 @@ package com.xpac27.layout
         {
             var p:String = (horizontal) ? 'HFit' : 'VFit';
             var total:Number = 0;
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (entity[p] && entity.neglect && !entity.absolute) total ++;
             }
@@ -337,7 +319,7 @@ package com.xpac27.layout
             var p : String = (horizontal) ? 'HFit'       : 'VFit';
             var a : String = (horizontal) ? 'totalWidth' : 'totalHeight';
             var space:Number = (horizontal) ? width : height;
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (!entity[p] && entity.relative && !entity.absolute) space -= entity[a];
             }
@@ -346,7 +328,7 @@ package com.xpac27.layout
 
         protected function contains(a:String):Boolean
         {
-            for each (var entity:Entity in _entities)
+            for each (var entity:Entity in entities)
             {
                 if (entity[a]) return true;
             }
@@ -355,7 +337,7 @@ package com.xpac27.layout
 
         protected function get entities():Array
         {
-            return _entities;
+            return _entities.filter(function(element:*, index:int, arr:Array):Boolean { return element.active; });
         }
 
         private var _entities:Array = [];

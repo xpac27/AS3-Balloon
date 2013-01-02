@@ -57,8 +57,10 @@ package com.xpac27.layout
         private function addTo(entity:Entity, position:uint):Boolean
         {
             if (_subject.parent || _parent) return false;
-            _parent = entity;
             entity.addChild(this);
+            _parent = entity;
+            if (!_parent.visible) _subject.visible = false;
+            //if (!_parent.active) _active = false;
             Scene.display(_subject, position);
             return true;
         }
@@ -117,12 +119,27 @@ package com.xpac27.layout
             }
             return _aspectRatio;
         }
+        public function set alpha(v:Number):void
+        {
+            _subject.alpha = v;
+            for each (var entity:Entity in _children) { entity.alpha = v; }
+        }
+        public function set visible(v:Boolean):void
+        {
+            _subject.visible = v;
+            for each (var entity:Entity in _children) { entity.visible = v; }
+        }
+        public function set active(v:Boolean):void
+        {
+            _active = v;
+            //for each (var entity:Entity in _children) { entity.active = v; }
+            visible = v;
+        }
+
 
         // OVERRIDABLE
         public function set width(v:Number):void    { _subject.width = (v - v % 1); }
         public function set height(v:Number):void   { _subject.height = (v - v % 1); }
-        public function set alpha(v:Number):void    { _subject.alpha = v; }
-        public function set visible(v:Boolean):void { _subject.visible = v; }
         public function get width():Number          { return _subject.width; }
         public function get height():Number         { return _subject.height; }
         public function get parent():Entity         { return _parent; }
@@ -132,6 +149,7 @@ package com.xpac27.layout
         public function get HFill():Boolean         { return 0 != (_alignement & HFILL); }
         public function get alpha():Number          { return _subject.alpha; }
         public function get visible():Boolean       { return _subject.visible; }
+        public function get active():Boolean        { return _active; }
 
         // SETTER
         final public function set x(v:Number):void            { _x = (v - v % 1); updateX(); }
@@ -207,6 +225,7 @@ package com.xpac27.layout
         private var _parent:Entity;
         private var _children:Array;
         private var _margins:Array;
+        private var _active:Boolean = true;
         private var _aspectRatio:Number = 0;
         private var _x:Number = 0;
         private var _y:Number = 0;

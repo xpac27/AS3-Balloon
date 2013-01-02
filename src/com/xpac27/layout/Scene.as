@@ -34,6 +34,7 @@ package com.xpac27.layout
                 clearTimeout(_updateTimeout);
                 _updateTimeout = setTimeout(update, _autoUpdate);
             }
+            dispatchEvent(event);
         }
 
         override public function appendTo(entity:Entity):Boolean
@@ -54,6 +55,7 @@ package com.xpac27.layout
         override public function set height(v:Number):void   {}
         override public function set alpha(v:Number):void    {}
         override public function set visible(v:Boolean):void {}
+        override public function set active(v:Boolean):void  {}
 
         override public function get parent():Entity   { return this; }
         override public function get width():Number    { return _stage ? _stage.stageWidth : 0; }
